@@ -210,13 +210,6 @@ export default defineConfig({
 		},
 	},
 	build: {
-		rollupOptions: {
-			external: [
-				'@babel/parser',
-				'@babel/traverse',
-				'@babel/generator',
-				'@babel/types'
-			]
-		}
+		// Eliminado rollupOptions.external ya que estas dependencias no son necesarias en el build de producción para una SPA.
 	}
 });
