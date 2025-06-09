@@ -6,14 +6,15 @@ import React from 'react';
     import { getSectionDefinitions } from '@/components/cv-preview/cvSectionDefinitions';
 
     const CVPreviewContent = ({ cvData, cvPreviewRef }) => {
-      const { 
-        personalInfo = {}, 
-        educationDetails = {}, 
-        experienceDetails = {}, 
-        skillsDetails = {}, 
-        languageDetails = {}, 
-        interests = {}, 
-        otherInfo = {} 
+      console.log("CVPreviewContent - cvData recibido:", cvData); // Añadir este log
+      const {
+        personalInfo = {},
+        educationDetails = {},
+        experienceDetails = {},
+        skillsDetails = {},
+        languageDetails = {},
+        interests = {},
+        otherInfo = {}
       } = cvData || {};
       
       const hasAnyConversationalData = 
