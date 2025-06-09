@@ -28,6 +28,7 @@ import React, { useState, useRef } from 'react';
     import ModeSelection from '@/components/home/ModeSelection.jsx';
     import StepRenderer from '@/components/home/StepRenderer.jsx';
     import NavigationControls from '@/components/home/NavigationControls.jsx';
+    import CVProgressSummary from '@/components/home/CVProgressSummary.jsx'; // Importar el nuevo componente
     import CVGenerator from '@/lib/cvGenerator';
 
     const formStepsConfig = [
@@ -43,7 +44,7 @@ import React, { useState, useRef } from 'react';
     ];
 
     const conversationalStepsConfig = [
-      { id: 'personalInfo', title: 'Información Personal', icon: Bot, component: PersonalInfoStep }, 
+      { id: 'personalInfo', title: 'Información Personal', icon: Bot, component: PersonalInfoStep },
       { id: 'profilePicture', title: 'Foto de Perfil', icon: ImageIcon, component: ProfilePictureStep },
       { id: 'conversationalEducation', title: 'Educación (Conversacional)', icon: Bot, component: ConversationalEducationStep },
       { id: 'conversationalExperience', title: 'Experiencia (Conversacional)', icon: Bot, component: ConversationalExperienceStep },
@@ -58,7 +59,7 @@ import React, { useState, useRef } from 'react';
       const cvStoreData = useCVStore();
       const { cvData, resetCVData } = cvStoreData;
       const [currentStepIndex, setCurrentStepIndex] = useState(0);
-      const [mode, setMode] = useState(null); 
+      const [mode, setMode] = useState(null);
       const { toast } = useToast();
       const cvPreviewRef = useRef(null);
       const [isDownloading, setIsDownloading] = useState(false);
@@ -86,7 +87,7 @@ import React, { useState, useRef } from 'react';
 
       const handleModeSelection = (selectedMode) => {
         setMode(selectedMode);
-        setCurrentStepIndex(0); 
+        setCurrentStepIndex(0);
       };
       
       const handleReset = () => {
@@ -127,7 +128,7 @@ import React, { useState, useRef } from 'react';
         } finally {
             setIsDownloading(false);
         }
-    };
+      };
 
 
       const progress = steps.length > 0 ? ((currentStepIndex + 1) / steps.length) * 100 : 0;
@@ -140,49 +141,59 @@ import React, { useState, useRef } from 'react';
       const IconComponent = currentStepConfig?.icon || Edit3;
 
       return (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-4xl mx-auto p-2 sm:p-0"
+          className="w-full max-w-6xl mx-auto p-2 sm:p-0 grid grid-cols-1 lg:grid-cols-3 gap-4" // Modificado para grid
         >
-          <Card className="shadow-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur-md border-slate-200 dark:border-slate-700/50 overflow-hidden">
-            <CardHeader className="border-b border-slate-200 dark:border-slate-700/50 p-4 sm:p-5">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center">
-                  <IconComponent className="h-7 w-7 text-primary mr-2.5" />
-                  <CardTitle className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-gray-100">
-                    {currentStepConfig?.title || 'Paso Actual'}
-                  </CardTitle>
+          <div className="lg:col-span-2"> {/* Contenedor para el formulario */}
+            <Card className="shadow-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur-md border-slate-200 dark:border-slate-700/50 overflow-hidden">
+              <CardHeader className="border-b border-slate-200 dark:border-slate-700/50 p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center">
+                    <IconComponent className="h-7 w-7 text-primary mr-2.5" />
+                    <CardTitle className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-gray-100">
+                      {currentStepConfig?.title || 'Paso Actual'}
+                    </CardTitle>
+                  </div>
+                  <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                    Paso {currentStepIndex + 1} de {steps.length}
+                  </span>
                 </div>
-                <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                  Paso {currentStepIndex + 1} de {steps.length}
-                </span>
-              </div>
-              <Progress value={progress} className="w-full h-2 [&>div]:bg-gradient-to-r [&>div]:from-teal-400 [&>div]:to-cyan-500" />
-            </CardHeader>
+                <Progress value={progress} className="w-full h-2 [&>div]:bg-gradient-to-r [&>div]:from-teal-400 [&>div]:to-cyan-500" />
+              </CardHeader>
 
-            <CardContent className="p-3 sm:p-5 min-h-[300px] sm:min-h-[400px] flex flex-col justify-center items-center">
-              <StepRenderer
+              <CardContent className="p-3 sm:p-5 min-h-[300px] sm:min-h-[400px] flex flex-col justify-center items-center">
+                <StepRenderer
+                  currentStepIndex={currentStepIndex}
+                  CurrentStepComponent={currentStepConfig?.component}
+                  cvStoreData={cvStoreData}
+                  onStepComplete={handleNext}
+                  cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
+                  downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
+                  isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
+                />
+              </CardContent>
+
+              <NavigationControls
                 currentStepIndex={currentStepIndex}
-                CurrentStepComponent={currentStepConfig?.component}
-                cvStoreData={cvStoreData}
-                onStepComplete={handleNext}
-                cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
-                downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
-                isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
+                isLastStep={currentStepConfig?.id === 'preview'}
+                onBack={handleBack}
+                onNext={handleNext}
+                onReset={handleReset}
               />
-            </CardContent>
-
-            <NavigationControls
+            </Card>
+          </div>
+          {/* Columna para el resumen del CV */}
+          <div className="hidden lg:block"> {/* Ocultar en pantallas pequeñas */}
+            <CVProgressSummary
+              cvData={cvData}
               currentStepIndex={currentStepIndex}
-              isLastStep={currentStepConfig?.id === 'preview'}
-              onBack={handleBack}
-              onNext={handleNext}
-              onReset={handleReset}
+              stepsConfig={steps}
             />
-          </Card>
+          </div>
         </motion.div>
       );
     };

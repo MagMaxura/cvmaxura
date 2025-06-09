@@ -50,10 +50,11 @@ import React, { useEffect, useState } from 'react';
 
       const handleLocalInputChange = (fieldName, value) => {
         setFieldValues(prev => ({ ...prev, [fieldName]: value }));
+        handleChange('personalInfo', fieldName, value); // Llama a handleChange aquí
       };
       
       const handleInputBlur = (fieldName) => {
-        handleChange('personalInfo', fieldName, fieldValues[fieldName]);
+        // handleChange('personalInfo', fieldName, fieldValues[fieldName]); // Ya no es necesario llamar aquí
       };
 
 
