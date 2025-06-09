@@ -77,7 +77,7 @@ import React, { useState, useRef } from 'react';
         if (currentStepId && currentStepId.startsWith('preview') && currentStepId !== 'preview') {
           const timer = setTimeout(() => {
             handleNext();
-          }, 2000); // Avanza después de 2 segundos
+          }, 15000); // Avanza después de 5 segundos
           return () => clearTimeout(timer);
         }
       }, [currentStepIndex, steps, handleNext]);

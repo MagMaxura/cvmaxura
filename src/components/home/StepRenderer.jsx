@@ -18,7 +18,6 @@ import React from 'react';
             key={currentStepIndex}
             initial={{ opacity: 0, x: currentStepIndex > 0 ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: currentStepIndex > 0 ? -50 : 50 }}
             transition={{ duration: 0.4, type: 'spring', stiffness: 100, damping: 20 }}
             className="w-full"
           >
