@@ -72,6 +72,16 @@ import React, { useState, useRef } from 'react';
         console.log("HomePage - El componente se ha renderizado.");
       }, []);
 
+      useEffect(() => {
+        const currentStepId = steps[currentStepIndex]?.id;
+        if (currentStepId && currentStepId.startsWith('preview') && currentStepId !== 'preview') {
+          const timer = setTimeout(() => {
+            handleNext();
+          }, 2000); // Avanza después de 2 segundos
+          return () => clearTimeout(timer);
+        }
+      }, [currentStepIndex, steps, handleNext]);
+
 
 
       const steps = mode === 'form' ? formStepsConfig : (mode === 'conversational' ? conversationalStepsConfig : []);
@@ -197,6 +207,8 @@ import React, { useState, useRef } from 'react';
                 onBack={handleBack}
                 onNext={handleNext}
                 onReset={handleReset}
+                // Deshabilitar el botón "Siguiente" en los pasos de vista previa intermedios para evitar doble avance
+                disableNext={currentStepConfig?.id.startsWith('preview') && currentStepConfig?.id !== 'preview'}
               />
             </Card>
           </div>
