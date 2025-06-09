@@ -34,6 +34,7 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...experienceEntries];
         updatedEntries[index][field] = value;
         setExperienceEntries(updatedEntries);
+        console.log(`ExperienceStep - handleEntryChange: Actualizando campo '${field}' en índice ${index}. Nueva entrada:`, updatedEntries[index]); // Añadir este log
         handleChange('experience', null, updatedEntries);
       };
 
