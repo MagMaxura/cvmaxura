@@ -67,6 +67,7 @@ import React, { useState, useRef } from 'react';
       const steps = mode === 'form' ? formStepsConfig : (mode === 'conversational' ? conversationalStepsConfig : []);
       
       const handleNext = () => {
+        console.log(`HomePage - Navegando de paso ${currentStepIndex + 1} a ${currentStepIndex + 2}. cvData actual:`, cvData);
         if (currentStepIndex < steps.length - 1) {
           setCurrentStepIndex(prev => prev + 1);
         } else {
@@ -80,17 +81,20 @@ import React, { useState, useRef } from 'react';
       };
 
       const handleBack = () => {
+        console.log(`HomePage - Retrocediendo de paso ${currentStepIndex + 1} a ${currentStepIndex}. cvData actual:`, cvData);
         if (currentStepIndex > 0) {
           setCurrentStepIndex(prev => prev - 1);
         }
       };
 
       const handleModeSelection = (selectedMode) => {
+        console.log("HomePage - Modo seleccionado:", selectedMode);
         setMode(selectedMode);
         setCurrentStepIndex(0);
       };
       
       const handleReset = () => {
+        console.log("HomePage - Reiniciando formulario.");
         resetCVData();
         setCurrentStepIndex(0);
         setMode(null);

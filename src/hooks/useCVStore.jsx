@@ -82,14 +82,11 @@ import React, { useState, useEffect } from 'react';
             }
             mergedData.personalInfo = currentPersonalInfo;
 
-            console.log("useCVStore - Datos cargados/fusionados:", mergedData); // Añadir este log
             return mergedData;
           }
-          console.log("useCVStore - Datos iniciales (localStorage vacío o error):", initialCVDataGlobal); // Añadir este log
           return initialCVDataGlobal;
         } catch (error)          {
           console.error("Error reading from localStorage", error);
-          console.log("useCVStore - Datos iniciales (error de lectura):", initialCVDataGlobal); // Añadir este log
           return initialCVDataGlobal;
         }
       });
@@ -103,62 +100,80 @@ import React, { useState, useEffect } from 'react';
       }, [cvData]);
 
       const updateCVData = (section, dataOrField, valueIfField) => {
-        if (typeof dataOrField === 'string' && valueIfField !== undefined) {
-          
-          setCvData(prevData => ({
-            ...prevData,
-            [section]: {
-              ...prevData[section],
-              [dataOrField]: valueIfField,
-            },
-          }));
-        } else {
-          
-          setCvData(prevData => ({
-            ...prevData,
-            [section]: dataOrField,
-          }));
-        }
+        setCvData(prevData => {
+          let newData;
+          if (typeof dataOrField === 'string' && valueIfField !== undefined) {
+            newData = {
+              ...prevData,
+              [section]: {
+                ...prevData[section],
+                [dataOrField]: valueIfField,
+              },
+            };
+          } else {
+            newData = {
+              ...prevData,
+              [section]: dataOrField,
+            };
+          }
+          console.log(`useCVStore - updateCVData: Sección '${section}' actualizada. Nuevo cvData:`, newData);
+          return newData;
+        });
       };
       
-
       const updateCVField = (sectionName, fieldName, fieldValue) => {
         setCvData(prevData => {
           if (typeof prevData[sectionName] === 'object' && prevData[sectionName] !== null && !Array.isArray(prevData[sectionName])) {
-            return {
+            const newData = {
               ...prevData,
               [sectionName]: {
                 ...prevData[sectionName],
                 [fieldName]: fieldValue,
               },
             };
+            console.log(`useCVStore - updateCVField: Campo '${fieldName}' en sección '${sectionName}' actualizado. Nuevo cvData:`, newData);
+            return newData;
           }
-          return prevData; 
+          console.log(`useCVStore - updateCVField: No se pudo actualizar el campo '${fieldName}' en sección '${sectionName}'. cvData actual:`, prevData);
+          return prevData;
         });
       };
       
       const addListItem = (section, item) => {
-        setCvData(prevData => ({
-          ...prevData,
-          [section]: [...(prevData[section] || []), item],
-        }));
+        setCvData(prevData => {
+          const newData = {
+            ...prevData,
+            [section]: [...(prevData[section] || []), item],
+          };
+          console.log(`useCVStore - addListItem: Elemento añadido a sección '${section}'. Nuevo cvData:`, newData);
+          return newData;
+        });
       };
 
       const updateListItem = (section, index, item) => {
-        setCvData(prevData => ({
-          ...prevData,
-          [section]: prevData[section].map((existingItem, i) => (i === index ? item : existingItem)),
-        }));
+        setCvData(prevData => {
+          const newData = {
+            ...prevData,
+            [section]: prevData[section].map((existingItem, i) => (i === index ? item : existingItem)),
+          };
+          console.log(`useCVStore - updateListItem: Elemento en índice ${index} de sección '${section}' actualizado. Nuevo cvData:`, newData);
+          return newData;
+        });
       };
 
       const removeListItem = (section, index) => {
-        setCvData(prevData => ({
-          ...prevData,
-          [section]: prevData[section].filter((_, i) => i !== index),
-        }));
+        setCvData(prevData => {
+          const newData = {
+            ...prevData,
+            [section]: prevData[section].filter((_, i) => i !== index),
+          };
+          console.log(`useCVStore - removeListItem: Elemento en índice ${index} de sección '${section}' eliminado. Nuevo cvData:`, newData);
+          return newData;
+        });
       };
       
       const resetCVData = () => {
+        console.log("useCVStore - Reiniciando cvData.");
         setCvData(initialCVDataGlobal);
         try {
           window.localStorage.removeItem('cvData');
