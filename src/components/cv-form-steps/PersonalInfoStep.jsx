@@ -40,6 +40,17 @@ import React, { useEffect, useState } from 'react';
       const handleSubmit = (e) => {
         e.preventDefault();
         if (isListening || isActivating) stopListening();
+
+        // Validar campos obligatorios
+        if (!fieldValues.fullName || !fieldValues.email) {
+          toast({
+            title: "Campos obligatorios incompletos",
+            description: "Por favor, completa tu Nombre Completo y Correo Electrónico.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         Object.keys(fieldValues).forEach(key => {
             if(fieldValues[key] !== cvData.personalInfo[key]) {
                  handleChange('personalInfo', key, fieldValues[key]);

@@ -94,6 +94,17 @@ import React, { useState, useEffect } from 'react';
       const handleNextQuestion = (e) => {
         e.preventDefault();
         if(isListening || isActivating) stopListening();
+
+        // Validar que la respuesta actual no esté vacía
+        if (!answers[currentFieldId] || answers[currentFieldId].trim() === '') {
+          toast({
+            title: "Campo incompleto",
+            description: "Por favor, ingresa tu respuesta antes de continuar.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         if (currentQuestionIndex < questions.length - 1) {
           setCurrentQuestionIndex(prev => prev + 1);
           clearFinalTranscript();
