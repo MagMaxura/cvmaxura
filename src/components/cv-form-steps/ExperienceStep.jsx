@@ -34,11 +34,21 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...experienceEntries];
         updatedEntries[index][field] = value;
         setExperienceEntries(updatedEntries);
-        console.log(`ExperienceStep - handleEntryChange: Actualizando campo '${field}' en índice ${index}. Nueva entrada:`, updatedEntries[index]); // Añadir este log
         handleChange('experience', null, updatedEntries);
       };
 
       const addEntry = () => {
+        // Validar la última entrada antes de añadir una nueva
+        const lastEntry = experienceEntries[experienceEntries.length - 1];
+        if (lastEntry && (!lastEntry.company || !lastEntry.role || !lastEntry.startDate || !lastEntry.description)) {
+          toast({
+            title: "Campos incompletos",
+            description: "Por favor, completa la entrada de experiencia actual antes de añadir una nueva.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         const newEntries = [...experienceEntries, { company: '', role: '', startDate: '', endDate: '', description: '' }];
         setExperienceEntries(newEntries);
         handleChange('experience', null, newEntries); // Guardar en el estado global inmediatamente

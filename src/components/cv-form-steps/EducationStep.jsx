@@ -39,6 +39,17 @@ import React, { useState, useEffect } from 'react';
       };
 
       const addEntry = () => {
+        // Validar la última entrada antes de añadir una nueva
+        const lastEntry = educationEntries[educationEntries.length - 1];
+        if (lastEntry && (!lastEntry.institution || !lastEntry.degree || !lastEntry.startDate)) {
+          toast({
+            title: "Campos incompletos",
+            description: "Por favor, completa la entrada de formación actual antes de añadir una nueva.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         const newEntries = [...educationEntries, { institution: '', degree: '', startDate: '', endDate: '', description: '' }];
         setEducationEntries(newEntries);
         handleChange('education', null, newEntries); // Guardar en el estado global inmediatamente
