@@ -1,0 +1,84 @@
+@tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    @layer base {
+      :root {
+        --background: 0 0% 98%; /* Light Gray - almost white */
+        --foreground: 20 14% 4%; /* Dark Charcoal */
+        --card: 0 0% 100%;
+        --card-foreground: 20 14% 4%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 20 14% 4%;
+        --primary: 190 70% 50%; /* Teal */
+        --primary-foreground: 0 0% 100%; /* White */
+        --secondary: 210 40% 90%; /* Light Blue-Gray */
+        --secondary-foreground: 190 70% 30%; /* Darker Teal */
+        --muted: 210 40% 96%; /* Very Light Blue-Gray */
+        --muted-foreground: 210 10% 45%; /* Medium Gray */
+        --accent: 30 90% 60%; /* Soft Coral/Orange */
+        --accent-foreground: 0 0% 100%; /* White */
+        --destructive: 0 72% 51%; 
+        --destructive-foreground: 0 0% 100%;
+        --border: 210 30% 88%; /* Lighter Gray border */
+        --input: 210 30% 95%; /* Very light gray for input */
+        --ring: 190 70% 50%; /* Teal for ring */
+        --radius: 0.75rem;
+      }
+
+      .dark {
+        --background: 220 20% 10%; /* Dark Blue-Gray */
+        --foreground: 210 30% 95%; /* Light Gray */
+        --card: 220 20% 13%;
+        --card-foreground: 210 30% 95%;
+        --popover: 220 20% 13%;
+        --popover-foreground: 210 30% 95%;
+        --primary: 190 65% 55%; /* Teal (slightly lighter for dark mode) */
+        --primary-foreground: 220 20% 5%; /* Very Dark Blue for contrast */
+        --secondary: 220 15% 20%; /* Darker Blue-Gray */
+        --secondary-foreground: 210 30% 95%;
+        --muted: 220 15% 20%;
+        --muted-foreground: 210 20% 70%; /* Lighter Gray for muted text */
+        --accent: 30 80% 65%; /* Soft Coral/Orange (slightly lighter for dark mode) */
+        --accent-foreground: 220 20% 5%;
+        --destructive: 0 63% 40%; 
+        --destructive-foreground: 210 30% 95%;
+        --border: 220 15% 25%; /* Medium dark gray border */
+        --input: 220 15% 18%; /* Darker gray for input */
+        --ring: 190 65% 55%;
+      }
+    }
+
+    @layer base {
+      * {
+        @apply border-border;
+      }
+      body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+        font-size: 16px; 
+      }
+      h1, h2, h3, h4, h5, h6 {
+        @apply font-semibold;
+      }
+      h1 { @apply text-3xl sm:text-4xl; }
+      h2 { @apply text-2xl sm:text-3xl; }
+      h3 { @apply text-xl sm:text-2xl; }
+      p, span, div, li, button, input, textarea, label, select {
+        @apply text-base; 
+      }
+    }
+
+    .glassmorphism {
+      background: rgba(230, 245, 245, 0.1); /* Light tealish tint for glass */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(200, 220, 220, 0.2);
+    }
+
+    .gradient-text {
+      @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500;
+    }
+    
+    .dark .gradient-text {
+      @apply bg-gradient-to-r from-teal-400 via-cyan-400 to-sky-400;
+    }
