@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 
     const initialCVDataGlobal = {
       personalInfo: {
@@ -55,6 +56,7 @@ import React, { useState, useEffect } from 'react';
     };
     
     const useCVStore = () => {
+      const { toast } = useToast();
       const [cvData, setCvData] = useState(() => {
         try {
           const item = window.localStorage.getItem('cvData');
@@ -94,6 +96,7 @@ import React, { useState, useEffect } from 'react';
       useEffect(() => {
         try {
           window.localStorage.setItem('cvData', JSON.stringify(cvData));
+          console.log("useCVStore - cvData actualizado y guardado en localStorage:", cvData);
         } catch (error) {
           console.error("Error writing to localStorage", error);
         }
@@ -132,6 +135,11 @@ import React, { useState, useEffect } from 'react';
               },
             };
             console.log(`useCVStore - updateCVField: Campo '${fieldName}' en sección '${sectionName}' actualizado. Nuevo cvData:`, newData);
+            toast({
+              title: "Campo Actualizado",
+              description: `El campo '${fieldName}' en la sección '${sectionName}' ha sido actualizado.`,
+              duration: 2000,
+            });
             return newData;
           }
           console.log(`useCVStore - updateCVField: No se pudo actualizar el campo '${fieldName}' en sección '${sectionName}'. cvData actual:`, prevData);

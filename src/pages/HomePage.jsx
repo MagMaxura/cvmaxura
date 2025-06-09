@@ -64,6 +64,12 @@ import React, { useState, useRef } from 'react';
       const cvPreviewRef = useRef(null);
       const [isDownloading, setIsDownloading] = useState(false);
 
+      useEffect(() => {
+        console.log("HomePage - El componente se ha renderizado.");
+      }, []);
+
+
+
       const steps = mode === 'form' ? formStepsConfig : (mode === 'conversational' ? conversationalStepsConfig : []);
       
       const handleNext = () => {
