@@ -198,6 +198,11 @@ import React, { useState, useRef } from 'react';
               stepsConfig={steps}
             />
           </div>
+          {/* Bloque de depuración visible */}
+          <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
+            <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>
+            <pre className="whitespace-pre-wrap break-all">{JSON.stringify(cvData, null, 2)}</pre>
+          </div>
         </motion.div>
       );
     };

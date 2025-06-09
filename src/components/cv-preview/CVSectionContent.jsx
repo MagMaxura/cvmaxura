@@ -22,7 +22,7 @@ import React from 'react';
               {renderFormItem(item, index)}
             </div>
           ))}
-          {(hasConversationalDetails && (hasFormItems || showConversationalDataWhenFormIsEmpty)) && (
+          {hasConversationalDetails && ( // Simplificar la condición
             <ConversationalDetailBlock detailsObject={conversationalDetails} isSubtle={hasFormItems} />
           )}
         </>

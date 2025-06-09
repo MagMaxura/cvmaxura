@@ -9,8 +9,12 @@ import React from 'react';
             const hasFormItems = section.formItems && section.formItems.length > 0;
             const hasConvDetails = section.conversationalDetails && Object.values(section.conversationalDetails).some(v => v);
             
-            if (!hasFormItems && !hasConvDetails) return null;
-            if (!hasFormItems && hasConvDetails && !section.showConversationalDataWhenFormIsEmpty) return null;
+            // Renderizar la sección si tiene datos de formulario O datos conversacionales
+            if (!hasFormItems && !hasConvDetails) {
+              return null;
+            }
+            // Eliminar la segunda condición para asegurar que los datos conversacionales siempre se muestren si existen
+            // if (!hasFormItems && hasConvDetails && !section.showConversationalDataWhenFormIsEmpty) return null;
 
             return (
               <CVSection key={`${section.keyPrefix}-section-${index}`} icon={section.icon} title={section.title}>
