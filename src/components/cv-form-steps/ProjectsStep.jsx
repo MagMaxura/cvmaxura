@@ -38,7 +38,9 @@ import React, { useState, useEffect } from 'react';
       };
 
       const addEntry = () => {
-        setProjectEntries([...projectEntries, { name: '', description: '', technologies: '', link: '' }]);
+        const newEntries = [...projectEntries, { name: '', description: '', technologies: '', link: '' }];
+        setProjectEntries(newEntries);
+        handleChange('projects', null, newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {

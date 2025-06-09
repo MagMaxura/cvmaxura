@@ -39,7 +39,9 @@ import React, { useState, useEffect } from 'react';
       };
 
       const addEntry = () => {
-        setEducationEntries([...educationEntries, { institution: '', degree: '', startDate: '', endDate: '', description: '' }]);
+        const newEntries = [...educationEntries, { institution: '', degree: '', startDate: '', endDate: '', description: '' }];
+        setEducationEntries(newEntries);
+        handleChange('education', null, newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {

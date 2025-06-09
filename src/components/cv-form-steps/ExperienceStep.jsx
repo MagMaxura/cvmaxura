@@ -38,7 +38,9 @@ import React, { useState, useEffect } from 'react';
       };
 
       const addEntry = () => {
-        setExperienceEntries([...experienceEntries, { company: '', role: '', startDate: '', endDate: '', description: '' }]);
+        const newEntries = [...experienceEntries, { company: '', role: '', startDate: '', endDate: '', description: '' }];
+        setExperienceEntries(newEntries);
+        handleChange('experience', null, newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {
