@@ -50,6 +50,20 @@ import React, { useState, useEffect } from 'react';
       const handleSubmit = (e) => {
         e.preventDefault();
         if (isListening || isActivating) stopListening();
+
+        const hasValidEntry = experienceEntries.some(entry =>
+          entry.company && entry.role && entry.startDate && entry.description
+        );
+
+        if (!hasValidEntry && experienceEntries.length > 0) {
+          toast({
+            title: "Campos obligatorios incompletos",
+            description: "Por favor, completa al menos una entrada de experiencia con Empresa, Puesto, Fecha de Inicio y Descripción.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
         handleChange('experience', null, experienceEntries);
         if(onStepComplete) onStepComplete();
       };

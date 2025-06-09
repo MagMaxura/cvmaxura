@@ -51,6 +51,20 @@ import React, { useState, useEffect } from 'react';
       const handleSubmit = (e) => {
         e.preventDefault();
         if (isListening || isActivating) stopListening();
+
+        const hasValidEntry = educationEntries.some(entry =>
+          entry.institution && entry.degree && entry.startDate
+        );
+
+        if (!hasValidEntry && educationEntries.length > 0) {
+          toast({
+            title: "Campos obligatorios incompletos",
+            description: "Por favor, completa al menos una entrada de formación con Institución, Título y Fecha de Inicio.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         handleChange('education', null, educationEntries);
         if(onStepComplete) onStepComplete();
       };

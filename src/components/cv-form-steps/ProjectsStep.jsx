@@ -50,6 +50,20 @@ import React, { useState, useEffect } from 'react';
       const handleSubmit = (e) => {
         e.preventDefault();
         if (isListening || isActivating) stopListening();
+
+        const hasValidEntry = projectEntries.some(entry =>
+          entry.name && entry.description
+        );
+
+        if (!hasValidEntry && projectEntries.length > 0) {
+          toast({
+            title: "Campos obligatorios incompletos",
+            description: "Por favor, completa al menos una entrada de proyecto con Nombre y Descripción.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         handleChange('projects', null, projectEntries);
         if(onStepComplete) onStepComplete();
       };

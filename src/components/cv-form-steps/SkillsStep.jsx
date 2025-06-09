@@ -141,6 +141,20 @@ import React, { useState, useEffect } from 'react';
       const handleSubmit = (e) => {
         e.preventDefault();
         if (isListening || isActivating) stopListening();
+
+        const hasTechnicalSkills = technicalSkills.some(skill => skill.name);
+        const hasSoftSkills = softSkills.some(skill => skill.name);
+        const hasLanguages = languages.some(lang => lang.name);
+
+        if (!hasTechnicalSkills && !hasSoftSkills && !hasLanguages) {
+          toast({
+            title: "Campos obligatorios incompletos",
+            description: "Por favor, añade al menos una habilidad técnica, blanda o un idioma.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         handleChange('skills', 'technical', technicalSkills);
         handleChange('skills', 'soft', softSkills);
         handleChange('skills', 'languages', languages);

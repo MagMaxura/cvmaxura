@@ -177,7 +177,21 @@ import React, { useState, useEffect } from 'react';
             </div>
           )}
           <div className="flex justify-end pt-4">
-            <Button onClick={onStepComplete} variant="outline" className="border-primary text-primary hover:bg-primary/10 dark:border-teal-500 dark:text-teal-400 dark:hover:bg-teal-500/20">
+            <Button
+              onClick={() => {
+                if (languages.length === 0) {
+                  toast({
+                    title: "Campos obligatorios incompletos",
+                    description: "Por favor, añade al menos un idioma.",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+                onStepComplete();
+              }}
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary/10 dark:border-teal-500 dark:text-teal-400 dark:hover:bg-teal-500/20"
+            >
                 Siguiente Sección
             </Button>
           </div>
