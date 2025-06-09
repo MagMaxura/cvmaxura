@@ -82,11 +82,14 @@ import React, { useState, useEffect } from 'react';
             }
             mergedData.personalInfo = currentPersonalInfo;
 
+            console.log("useCVStore - Datos cargados/fusionados:", mergedData); // Añadir este log
             return mergedData;
           }
+          console.log("useCVStore - Datos iniciales (localStorage vacío o error):", initialCVDataGlobal); // Añadir este log
           return initialCVDataGlobal;
         } catch (error)          {
           console.error("Error reading from localStorage", error);
+          console.log("useCVStore - Datos iniciales (error de lectura):", initialCVDataGlobal); // Añadir este log
           return initialCVDataGlobal;
         }
       });

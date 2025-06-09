@@ -65,7 +65,6 @@ import React, { useState, useEffect } from 'react';
           return;
         }
 
-        console.log("EducationStep - Datos de educación al enviar:", educationEntries); // Añadir este log
         handleChange('education', null, educationEntries);
         if(onStepComplete) onStepComplete();
       };
