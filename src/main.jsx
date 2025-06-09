@@ -5,6 +5,8 @@ import React from 'react';
     import '@/index.css';
     import { Toaster } from '@/components/ui/toaster';
 
+    console.log("main.jsx - La aplicación se está inicializando.");
+
     ReactDOM.createRoot(document.getElementById('root')).render(
       <React.StrictMode>
         <BrowserRouter>
