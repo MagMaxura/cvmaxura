@@ -66,15 +66,19 @@ export const toast = ({ ...props }) => {
 }
 
 export function useToast() {
-  const [state, setState] = useState(toastStore.getState())
+  const [state, setState] = useState({ toasts: [] }); // Inicializar con un estado vacío para SSR
   
   useEffect(() => {
-    const unsubscribe = toastStore.subscribe((state) => {
-      setState(state)
-    })
-    
-    return unsubscribe
-  }, [])
+    // Solo suscribirse y obtener el estado inicial en el cliente
+    if (typeof window !== 'undefined') {
+      setState(toastStore.getState());
+      const unsubscribe = toastStore.subscribe((state) => {
+        setState(state);
+      });
+      
+      return unsubscribe;
+    }
+  }, []);
   
   useEffect(() => {
     const timeouts = []
