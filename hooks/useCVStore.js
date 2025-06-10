@@ -198,14 +198,28 @@ import { useToast } from '@/components/ui/use-toast';
       };
 
       return {
-        cvData: cvData || initialCVDataGlobal, // Asegurar que cvData siempre sea un objeto
+        cvData, // cvData ya está inicializado con initialCVDataGlobal
         updateCVData,
         updateCVField,
         addListItem,
         updateListItem,
         removeListItem,
         resetCVData,
-        getInitialCVData
+        getInitialCVData,
+        // Funciones de actualización específicas para cada sección
+        updatePersonalInfo: (field, value) => updateCVField('personalInfo', field, value),
+        updateEducation: (data) => updateCVData('education', data),
+        updateEducationDetails: (field, value) => updateCVField('educationDetails', field, value),
+        updateExperience: (data) => updateCVData('experience', data),
+        updateExperienceDetails: (field, value) => updateCVField('experienceDetails', field, value),
+        updateSkills: (category, data) => updateCVData('skills', { ...cvData.skills, [category]: data }),
+        updateSkillsDetails: (field, value) => updateCVField('skillsDetails', field, value),
+        updateLanguages: (data) => updateCVData('languages', data),
+        updateLanguageDetails: (field, value) => updateCVField('languageDetails', field, value),
+        updateInterests: (field, value) => updateCVField('interests', field, value),
+        updateOtherInfo: (field, value) => updateCVField('otherInfo', field, value),
+        updateProjects: (data) => updateCVData('projects', data),
+        updateCertifications: (data) => updateCVData('certifications', data),
       };
     };
 
