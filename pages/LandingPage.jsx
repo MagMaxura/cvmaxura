@@ -1,13 +1,15 @@
 import React from 'react';
     import Link from 'next/link'; // Usar Link de Next.js
-    import { motion } from 'framer-motion';
+    import dynamic from 'next/dynamic';
+
+    const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
     import { Button } from '../components/ui/button';
     import { ArrowRight, Bot, Edit3, FileText, Sparkles, Star, Zap, Mic, DollarSign, Gift } from 'lucide-react';
 
     const FeatureCard = ({ icon, title, description, delay }) => {
       const IconComponent = icon;
       return (
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay }}
@@ -18,12 +20,12 @@ import React from 'react';
           </div>
           <h3 className="text-xl font-semibold mb-2 text-slate-800 dark:text-gray-100">{title}</h3>
           <p className="text-slate-600 dark:text-slate-300 text-sm flex-grow">{description}</p>
-        </motion.div>
+        </MotionDiv>
       );
     };
 
     const TestimonialCard = ({ quote, author, role, delay }) => (
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay }}
@@ -39,13 +41,13 @@ import React from 'react';
             <p className="font-semibold text-slate-800 dark:text-gray-100">{author}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400">{role}</p>
           </div>
-        </motion.div>
+        </MotionDiv>
       );
 
     const LandingPage = () => {
       return (
         <div className="w-full">
-          <motion.section
+          <MotionDiv
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -55,14 +57,14 @@ import React from 'react';
               <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C3E0E5,transparent)] dark:bg-[radial-gradient(circle_500px_at_50%_200px,#1A3B5A,transparent)]"></div>
             </div>
 
-            <motion.div
+            <MotionDiv
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 120 }}
               className="inline-block p-3 bg-gradient-to-r from-primary/20 to-teal-500/20 dark:from-primary/30 dark:to-teal-500/30 rounded-full mb-6"
             >
               <Zap className="h-12 w-12 text-primary dark:text-teal-300" />
-            </motion.div>
+            </MotionDiv>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6">
               Tu <span className="gradient-text">CV Profesional</span> en Menos de 5 Minutos
@@ -70,7 +72,7 @@ import React from 'react';
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-10">
               Crea un currículum impactante rápidamente. Elige el <strong className="text-primary dark:text-teal-400">Modo Formulario</strong> (¡incluso con tu voz!) o charla con nuestra <strong className="text-primary dark:text-teal-400">IA en el Modo Conversacional</strong>.
             </p>
-            <motion.div
+            <MotionDiv
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -79,9 +81,9 @@ import React from 'react';
                   Comenzar Ahora <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-            </motion.div>
+            </MotionDiv>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">¡Descarga gratis o apoya con $1 USD!</p>
-          </motion.section>
+          </MotionDiv>
           {/* Resto de las secciones de la LandingPage */}
           <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-900/50 rounded-t-3xl">
             <div className="container mx-auto px-4">
@@ -171,7 +173,7 @@ import React from 'react';
               <p className="text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-10">
                 No dejes pasar la oportunidad de destacarte. Comienza a construir tu futuro profesional hoy mismo.
               </p>
-              <motion.div
+              <MotionDiv
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -180,10 +182,10 @@ import React from 'react';
                     Empezar a Crear mi CV <Sparkles className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-              </motion.div>
+              </MotionDiv>
             </div>
           </section>
-        </div>
+        </MotionDiv>
       );
     };
 

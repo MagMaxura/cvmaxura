@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
+
+const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
 import { Progress } from '../components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Edit3, FileText, FileImage as ImageIcon, Award, Languages as LanguagesIcon, Bot, CheckCircle } from 'lucide-react';
@@ -165,7 +167,7 @@ const HomePage = () => {
   const IconComponent = currentStepConfig?.icon || Edit3;
 
   return (
-    <motion.div
+    <MotionDiv
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -225,7 +227,7 @@ const HomePage = () => {
         <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>
         <pre className="whitespace-pre-wrap break-all">{JSON.stringify(cvData, null, 2)}</pre>
       </div>
-    </motion.div>
+    </MotionDiv>
   );
 };
 
