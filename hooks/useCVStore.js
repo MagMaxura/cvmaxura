@@ -57,7 +57,7 @@ import { useToast } from '@/components/ui/use-toast';
     
     const useCVStore = () => {
       const { toast } = useToast();
-      const [cvData, setCvData] = useState(initialCVDataGlobal);
+      const [cvData, setCvData] = useState(null); // Inicializar con null
 
       useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -87,10 +87,15 @@ import { useToast } from '@/components/ui/use-toast';
               }
               mergedData.personalInfo = currentPersonalInfo;
               setCvData(mergedData);
+            } else {
+              setCvData(initialCVDataGlobal); // Si no hay datos en localStorage, usar el estado inicial global
             }
           } catch (error) {
             console.error("Error reading from localStorage", error);
+            setCvData(initialCVDataGlobal); // En caso de error, usar el estado inicial global
           }
+        } else {
+          setCvData(initialCVDataGlobal); // En el servidor, usar el estado inicial global
         }
       }, []); // Se ejecuta solo una vez al montar el componente
 

@@ -65,7 +65,13 @@ const conversationalStepsConfig = [
 const HomePage = () => {
   const cvStoreData = useCVStore();
   console.log("HomePage - cvStoreData:", cvStoreData); // Depuración
-  const { cvData, resetCVData } = cvStoreData || {}; // Desestructuración segura
+  
+  // Renderizar null o un spinner si cvStoreData aún no se ha hidratado
+  if (!cvStoreData) {
+    return <div>Cargando...</div>; 
+  }
+
+  const { cvData, resetCVData } = cvStoreData; // Desestructuración segura
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();
@@ -86,7 +92,6 @@ const HomePage = () => {
   //     return () => clearTimeout(timer);
   //   }
   // }, [currentStepIndex, steps, handleNext]);
-
 
 
   const steps = mode === 'form' ? formStepsConfig : (mode === 'conversational' ? conversationalStepsConfig : []);
