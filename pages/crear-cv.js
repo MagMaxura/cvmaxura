@@ -75,15 +75,16 @@ const HomePage = () => {
     console.log("HomePage - El componente se ha renderizado.");
   }, []);
 
-  useEffect(() => {
-    const currentStepId = steps[currentStepIndex]?.id;
-    if (currentStepId && currentStepId.startsWith('preview') && currentStepId !== 'preview') {
-      const timer = setTimeout(() => {
-        handleNext();
-      }, 15000); // Avanza después de 15 segundos
-      return () => clearTimeout(timer);
-    }
-  }, [currentStepIndex, steps, handleNext]);
+  // Comentado temporalmente para depuración de SSR
+  // useEffect(() => {
+  //   const currentStepId = steps[currentStepIndex]?.id;
+  //   if (currentStepId && currentStepId.startsWith('preview') && currentStepId !== 'preview') {
+  //     const timer = setTimeout(() => {
+  //       handleNext();
+  //     }, 15000); // Avanza después de 15 segundos
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [currentStepIndex, steps, handleNext]);
 
 
 
