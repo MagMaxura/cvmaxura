@@ -1,35 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '../components/ui/progress';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Edit3, FileText, FileImage as ImageIcon, Award, Languages as LanguagesIcon, Bot, CheckCircle } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '../components/ui/use-toast';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import PersonalInfoStep from '@/components/cv-form-steps/PersonalInfoStep';
-import ExperienceStep from '@/components/cv-form-steps/ExperienceStep';
-import EducationStep from '@/components/cv-form-steps/EducationStep';
-import SkillsStep from '@/components/cv-form-steps/SkillsStep';
-import ProjectsStep from '@/components/cv-form-steps/ProjectsStep';
-import CertificationsStep from '@/components/cv-form-steps/CertificationsStep.jsx';
-import LanguagesStep from '@/components/cv-form-steps/LanguagesStep.jsx';
-import ProfilePictureStep from '@/components/cv-form-steps/ProfilePictureStep';
-import PreviewStep from '@/components/cv-form-steps/PreviewStep';
+import PersonalInfoStep from '../components/cv-form-steps/PersonalInfoStep';
+import ExperienceStep from '../components/cv-form-steps/ExperienceStep';
+import EducationStep from '../components/cv-form-steps/EducationStep';
+import SkillsStep from '../components/cv-form-steps/SkillsStep';
+import ProjectsStep from '../components/cv-form-steps/ProjectsStep';
+import CertificationsStep from '../components/cv-form-steps/CertificationsStep.jsx';
+import LanguagesStep from '../components/cv-form-steps/LanguagesStep.jsx';
+import ProfilePictureStep from '../components/cv-form-steps/ProfilePictureStep';
+import PreviewStep from '../components/cv-form-steps/PreviewStep';
 
-import ConversationalEducationStep from '@/components/cv-form-steps/ConversationalEducationStep';
-import ConversationalExperienceStep from '@/components/cv-form-steps/ConversationalExperienceStep';
-import ConversationalSkillsStep from '@/components/cv-form-steps/ConversationalSkillsStep';
-import ConversationalLanguagesStep from '@/components/cv-form-steps/ConversationalLanguagesStep';
-import ConversationalInterestsStep from '@/components/cv-form-steps/ConversationalInterestsStep';
-import ConversationalOtherInfoStep from '@/components/cv-form-steps/ConversationalOtherInfoStep';
+import ConversationalEducationStep from '../components/cv-form-steps/conversational-steps/ConversationalEducationStep';
+import ConversationalExperienceStep from '../components/cv-form-steps/conversational-steps/ConversationalExperienceStep';
+import ConversationalSkillsStep from '../components/cv-form-steps/conversational-steps/ConversationalSkillsStep';
+import ConversationalLanguagesStep from '../components/cv-form-steps/conversational-steps/ConversationalLanguagesStep';
+import ConversationalInterestsStep from '../components/cv-form-steps/conversational-steps/ConversationalInterestsStep';
+import ConversationalOtherInfoStep from '../components/cv-form-steps/conversational-steps/ConversationalOtherInfoStep';
 
-import useCVStore from '@/hooks/useCVStore';
-import ModeSelection from '@/components/home/ModeSelection.jsx';
-import StepRenderer from '@/components/home/StepRenderer.jsx';
-import NavigationControls from '@/components/home/NavigationControls.jsx';
-import CVProgressSummary from '@/components/home/CVProgressSummary.jsx'; // Importar el nuevo componente
-import CVGenerator from '@/lib/cvGenerator';
+import useCVStore from '../hooks/useCVStore';
+import ModeSelection from '../components/home/ModeSelection.jsx';
+import StepRenderer from '../components/home/StepRenderer.jsx';
+import NavigationControls from '../components/home/NavigationControls.jsx';
+import CVProgressSummary from '../components/home/CVProgressSummary.jsx'; // Importar el nuevo componente
+import CVGenerator from '../lib/cvGenerator';
 
 const formStepsConfig = [
   { id: 'personalInfo', title: 'Información Personal', icon: Edit3, component: PersonalInfoStep },

@@ -1,7 +1,7 @@
 import React from 'react';
     import Link from 'next/link'; // Usar Link de Next.js
     import { motion } from 'framer-motion';
-    import { Button } from '@/components/ui/button';
+    import { Button } from '../components/ui/button';
     import { ArrowRight, Bot, Edit3, FileText, Sparkles, Star, Zap, Mic, DollarSign, Gift } from 'lucide-react';
 
     const FeatureCard = ({ icon, title, description, delay }) => {
