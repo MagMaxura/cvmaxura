@@ -71,7 +71,9 @@ const HomePage = () => {
     return <div>Cargando...</div>; 
   }
 
-  const { cvData, resetCVData } = cvStoreData; // Desestructuración segura
+  const cvData = cvStoreData?.cvData; // Acceso seguro a la propiedad
+  const resetCVData = cvStoreData?.resetCVData; // Acceso seguro a la propiedad
+  console.log("HomePage - cvData (después de desestructuración):", cvData); // Depuración adicional
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();
