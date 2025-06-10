@@ -64,7 +64,8 @@ const conversationalStepsConfig = [
 
 const HomePage = () => {
   const cvStoreData = useCVStore();
-  const { cvData, resetCVData } = cvStoreData;
+  console.log("HomePage - cvStoreData:", cvStoreData); // Depuración
+  const { cvData, resetCVData } = cvStoreData || {}; // Desestructuración segura
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();
