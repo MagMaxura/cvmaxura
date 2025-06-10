@@ -9,13 +9,7 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const EducationStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateEducation } = cvStoreData; // Desestructurar cvData y updateEducation
+    const EducationStep = ({ cvData, addListItem, updateListItem, removeListItem, onStepComplete }) => {
       const [educationEntries, setEducationEntries] = useState(cvData.education || [{ institution: '', degree: '', startDate: '', endDate: '', description: '' }]);
       const { toast } = useToast();
       const {
@@ -41,7 +35,7 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...educationEntries];
         updatedEntries[index][field] = value;
         setEducationEntries(updatedEntries);
-        updateEducation(updatedEntries); // Usar updateEducation
+        updateListItem('education', index, updatedEntries[index]);
       };
 
       const addEntry = () => {
@@ -56,15 +50,15 @@ import React, { useState, useEffect } from 'react';
           return;
         }
 
-        const newEntries = [...educationEntries, { institution: '', degree: '', startDate: '', endDate: '', description: '' }];
-        setEducationEntries(newEntries);
-        updateEducation(newEntries); // Guardar en el estado global inmediatamente
+        const newEntry = { institution: '', degree: '', startDate: '', endDate: '', description: '' };
+        setEducationEntries(prev => [...prev, newEntry]);
+        addListItem('education', newEntry);
       };
 
       const removeEntry = (index) => {
         const updatedEntries = educationEntries.filter((_, i) => i !== index);
         setEducationEntries(updatedEntries);
-        updateEducation(updatedEntries); // Usar updateEducation
+        removeListItem('education', index);
       };
 
       const handleSubmit = (e) => {
@@ -84,7 +78,7 @@ import React, { useState, useEffect } from 'react';
           return;
         }
  
-        updateEducation(educationEntries); // Usar updateEducation
+        // No es necesario llamar a updateEducation aquí, ya que las actualizaciones se manejan en handleEntryChange, addEntry y removeEntry
         if(onStepComplete) onStepComplete();
       };
 

@@ -9,13 +9,7 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const ProjectsStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateProjects } = cvStoreData; // Desestructurar cvData y updateProjects
+    const ProjectsStep = ({ cvData, addListItem, updateListItem, removeListItem, onStepComplete }) => {
       const [projectEntries, setProjectEntries] = useState(cvData.projects || [{ name: '', description: '', technologies: '', link: '' }]);
       const { toast } = useToast();
       const {
@@ -40,19 +34,19 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...projectEntries];
         updatedEntries[index][field] = value;
         setProjectEntries(updatedEntries);
-        updateProjects(updatedEntries); // Usar updateProjects
+        updateListItem('projects', index, updatedEntries[index]);
       };
 
       const addEntry = () => {
-        const newEntries = [...projectEntries, { name: '', description: '', technologies: '', link: '' }];
-        setProjectEntries(newEntries);
-        updateProjects(newEntries); // Guardar en el estado global inmediatamente
+        const newEntry = { name: '', description: '', technologies: '', link: '' };
+        setProjectEntries(prev => [...prev, newEntry]);
+        addListItem('projects', newEntry);
       };
 
       const removeEntry = (index) => {
         const updatedEntries = projectEntries.filter((_, i) => i !== index);
         setProjectEntries(updatedEntries);
-        updateProjects(updatedEntries); // Usar updateProjects
+        removeListItem('projects', index);
       };
 
       const handleSubmit = (e) => {
@@ -72,7 +66,7 @@ import React, { useState, useEffect } from 'react';
           return;
         }
  
-        updateProjects(projectEntries); // Usar updateProjects
+        // No es necesario llamar a updateProjects aquí, ya que las actualizaciones se manejan en handleEntryChange, addEntry y removeEntry
         if(onStepComplete) onStepComplete();
       };
 

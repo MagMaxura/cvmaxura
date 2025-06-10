@@ -15,13 +15,7 @@ import React, { useState, useEffect } from 'react';
       { id: 'drivingLicense', label: '¿Tenés licencia de conducir o vehículo?', type: 'text' },
     ];
 
-    const ConversationalOtherInfoStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateOtherInfo } = cvStoreData; // Desestructurar cvData y updateOtherInfo
+    const ConversationalOtherInfoStep = ({ cvData, handleChange, onStepComplete }) => {
       const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
       const [answers, setAnswers] = useState(cvData.otherInfo || {});
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
@@ -45,7 +39,7 @@ import React, { useState, useEffect } from 'react';
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAnswers(prev => ({ ...prev, [name]: value }));
-        updateOtherInfo(name, value); // Usar updateOtherInfo
+        handleChange('otherInfo', name, value);
       };
 
       const handleMicToggle = () => {
@@ -66,7 +60,7 @@ import React, { useState, useEffect } from 'react';
         if (!isListening && !isActivating && finalTranscript && currentFieldId) {
           const newAnswer = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           setAnswers(prev => ({ ...prev, [currentFieldId]: newAnswer }));
-          updateOtherInfo(currentFieldId, newAnswer); // Usar updateOtherInfo
+          handleChange('otherInfo', currentFieldId, newAnswer);
           clearFinalTranscript();
           setCurrentDictationFieldOriginalValue('');
         }

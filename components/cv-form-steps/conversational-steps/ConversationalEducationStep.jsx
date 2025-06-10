@@ -15,13 +15,7 @@ import React, { useState, useEffect } from 'react';
       { id: 'additionalEducationInfo', label: '¿Quieres contar algo más sobre tu formación académica?', type: 'textarea' },
     ];
 
-    const ConversationalEducationStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateEducationDetails } = cvStoreData; // Desestructurar cvData y updateEducationDetails
+    const ConversationalEducationStep = ({ cvData, handleChange, onStepComplete }) => {
       const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
       const [answers, setAnswers] = useState(cvData.educationDetails || {});
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
@@ -45,7 +39,7 @@ import React, { useState, useEffect } from 'react';
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAnswers(prev => ({ ...prev, [name]: value }));
-        updateEducationDetails(name, value); // Usar updateEducationDetails
+        handleChange('educationDetails', name, value);
       };
 
       const handleMicToggle = () => {
@@ -66,7 +60,7 @@ import React, { useState, useEffect } from 'react';
         if (!isListening && !isActivating && finalTranscript && currentFieldId) {
           const newAnswer = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           setAnswers(prev => ({ ...prev, [currentFieldId]: newAnswer }));
-          updateEducationDetails(currentFieldId, newAnswer); // Usar updateEducationDetails
+          handleChange('educationDetails', currentFieldId, newAnswer);
           clearFinalTranscript();
           setCurrentDictationFieldOriginalValue('');
         }

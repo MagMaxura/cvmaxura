@@ -14,13 +14,7 @@ import React, { useState, useEffect } from 'react';
       { id: 'careerPath', label: '¿Te gustaría cambiar de rubro o seguir en lo tuyo?', type: 'textarea' },
     ];
 
-    const ConversationalInterestsStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateInterests } = cvStoreData; // Desestructurar cvData y updateInterests
+    const ConversationalInterestsStep = ({ cvData, handleChange, onStepComplete }) => {
       const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
       const [answers, setAnswers] = useState(cvData.interests || {});
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
@@ -44,7 +38,7 @@ import React, { useState, useEffect } from 'react';
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAnswers(prev => ({ ...prev, [name]: value }));
-        updateInterests(name, value); // Usar updateInterests
+        handleChange('interests', name, value);
       };
 
       const handleMicToggle = () => {
@@ -65,7 +59,7 @@ import React, { useState, useEffect } from 'react';
         if (!isListening && !isActivating && finalTranscript && currentFieldId) {
           const newAnswer = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           setAnswers(prev => ({ ...prev, [currentFieldId]: newAnswer }));
-          updateInterests(currentFieldId, newAnswer); // Usar updateInterests
+          handleChange('interests', currentFieldId, newAnswer);
           clearFinalTranscript();
           setCurrentDictationFieldOriginalValue('');
         }

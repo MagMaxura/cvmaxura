@@ -7,13 +7,7 @@ import React, { useState, useEffect } from 'react';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
     import SkillCategory from '@/components/cv-form-steps/skills-step/SkillCategory';
 
-    const SkillsStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateSkills } = cvStoreData; // Desestructurar cvData y updateSkills
+    const SkillsStep = ({ cvData, updateCVData, onStepComplete }) => {
       const [technicalSkills, setTechnicalSkills] = useState(cvData.skills?.technical || [{ id: Date.now(), name: '', level: 3 }]);
       const [softSkills, setSoftSkills] = useState(cvData.skills?.soft || [{ id: Date.now() + 1, name: '', level: 3 }]);
       const [languages, setLanguages] = useState(cvData.skills?.languages || [{ id: Date.now() + 2, name: '', level: 3 }]);
@@ -42,7 +36,7 @@ import React, { useState, useEffect } from 'react';
             const updatedSkills = prevSkills.map((skill, i) =>
               i === index ? { ...skill, [field]: value } : skill
             );
-            updateSkills(categoryKey, updatedSkills); // Usar updateSkills
+            updateCVData('skills', { ...cvData.skills, [categoryKey]: updatedSkills });
             return updatedSkills;
           });
         };
@@ -52,7 +46,7 @@ import React, { useState, useEffect } from 'react';
         return () => {
           setter(prevSkills => {
             const newSkills = [...prevSkills, { id: Date.now(), name: '', level: 3 }];
-            updateSkills(categoryKey, newSkills); // Usar updateSkills
+            updateCVData('skills', { ...cvData.skills, [categoryKey]: newSkills });
             return newSkills;
           });
         };
@@ -62,7 +56,7 @@ import React, { useState, useEffect } from 'react';
         return (index) => {
           setter(prevSkills => {
             const updatedSkills = prevSkills.filter((_, i) => i !== index);
-            updateSkills(categoryKey, updatedSkills); // Usar updateSkills
+            updateCVData('skills', { ...cvData.skills, [categoryKey]: updatedSkills });
             return updatedSkills;
           });
         };
@@ -161,9 +155,11 @@ import React, { useState, useEffect } from 'react';
           return;
         }
  
-        updateSkills('technical', technicalSkills);
-        updateSkills('soft', softSkills);
-        updateSkills('languages', languages);
+        updateCVData('skills', {
+          technical: technicalSkills,
+          soft: softSkills,
+          languages: languages,
+        });
         if(onStepComplete) onStepComplete();
       };
 

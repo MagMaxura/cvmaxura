@@ -9,13 +9,7 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const ExperienceStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateExperience } = cvStoreData; // Desestructurar cvData y updateExperience
+    const ExperienceStep = ({ cvData, addListItem, updateListItem, removeListItem, onStepComplete }) => {
       const [experienceEntries, setExperienceEntries] = useState(cvData.experience || [{ company: '', role: '', startDate: '', endDate: '', description: '' }]);
       const { toast } = useToast();
       const {
@@ -40,7 +34,7 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...experienceEntries];
         updatedEntries[index][field] = value;
         setExperienceEntries(updatedEntries);
-        updateExperience(updatedEntries); // Usar updateExperience
+        updateListItem('experience', index, updatedEntries[index]);
       };
 
       const addEntry = () => {
@@ -55,15 +49,15 @@ import React, { useState, useEffect } from 'react';
           return;
         }
 
-        const newEntries = [...experienceEntries, { company: '', role: '', startDate: '', endDate: '', description: '' }];
-        setExperienceEntries(newEntries);
-        updateExperience(newEntries); // Guardar en el estado global inmediatamente
+        const newEntry = { company: '', role: '', startDate: '', endDate: '', description: '' };
+        setExperienceEntries(prev => [...prev, newEntry]);
+        addListItem('experience', newEntry);
       };
 
       const removeEntry = (index) => {
         const updatedEntries = experienceEntries.filter((_, i) => i !== index);
         setExperienceEntries(updatedEntries);
-        updateExperience(updatedEntries); // Usar updateExperience
+        removeListItem('experience', index);
       };
 
       const handleSubmit = (e) => {
@@ -83,7 +77,7 @@ import React, { useState, useEffect } from 'react';
           return;
         }
         
-        updateExperience(experienceEntries); // Usar updateExperience
+        // No es necesario llamar a updateExperience aquí, ya que las actualizaciones se manejan en handleEntryChange, addEntry y removeEntry
         if(onStepComplete) onStepComplete();
       };
 

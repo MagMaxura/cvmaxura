@@ -59,13 +59,7 @@ import React, { useState, useEffect } from 'react';
       );
     };
 
-    const CertificationsStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updateCertifications } = cvStoreData; // Desestructurar cvData y updateCertifications
+    const CertificationsStep = ({ cvData, addListItem, updateListItem, removeListItem, onStepComplete }) => {
       const [certifications, setCertifications] = useState(cvData.certifications || []);
       const [newCert, setNewCert] = useState({ name: '', issuingOrganization: '', dateObtained: '', link: '' });
       const [editingIndex, setEditingIndex] = useState(null);
@@ -81,17 +75,17 @@ import React, { useState, useEffect } from 'react';
           toast({ title: "Campos incompletos", description: "Por favor, completa nombre, organización y fecha.", variant: "destructive" });
           return;
         }
-        const updatedCerts = [...certifications, newCert];
-        setCertifications(updatedCerts);
-        updateCertifications(updatedCerts); // Usar updateCertifications
+        const newCertEntry = { ...newCert };
+        setCertifications(prev => [...prev, newCertEntry]);
+        addListItem('certifications', newCertEntry);
         setNewCert({ name: '', issuingOrganization: '', dateObtained: '', link: '' });
-        toast({ title: "Certificación agregada", description: `${newCert.name} ha sido añadida.`, className: "bg-green-100 dark:bg-green-800 border-green-300 dark:border-green-600" });
+        toast({ title: "Certificación agregada", description: `${newCertEntry.name} ha sido añadida.`, className: "bg-green-100 dark:bg-green-800 border-green-300 dark:border-green-600" });
       };
 
       const updateCertification = (index, updatedCert) => {
         const updatedCerts = certifications.map((cert, i) => i === index ? updatedCert : cert);
         setCertifications(updatedCerts);
-        updateCertifications(updatedCerts); // Usar updateCertifications
+        updateListItem('certifications', index, updatedCert);
         setEditingIndex(null);
         toast({ title: "Certificación actualizada", description: `${updatedCert.name} ha sido modificada.`, className: "bg-blue-100 dark:bg-blue-800 border-blue-300 dark:border-blue-600" });
       };
@@ -100,7 +94,7 @@ import React, { useState, useEffect } from 'react';
         const certNameToRemove = certifications[index].name;
         const updatedCerts = certifications.filter((_, i) => i !== index);
         setCertifications(updatedCerts);
-        updateCertifications(updatedCerts); // Usar updateCertifications
+        removeListItem('certifications', index);
         toast({ title: "Certificación eliminada", description: `${certNameToRemove} ha sido eliminada.`, variant: "destructive" });
       };
 

@@ -4,13 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
     import { motion } from 'framer-motion';
     import { UploadCloud, Camera, XCircle, CheckCircle, Trash2, User as UserIcon } from 'lucide-react';
 
-    const ProfilePictureStep = ({ cvStoreData, onStepComplete }) => {
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-      const { cvData, updatePersonalInfo } = cvStoreData; // Desestructurar cvData y updatePersonalInfo
+    const ProfilePictureStep = ({ cvData, handleChange, onStepComplete }) => {
       const { toast } = useToast();
       const [imagePreview, setImagePreview] = useState(cvData.personalInfo.profilePicture || null);
       const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -51,7 +45,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
           const reader = new FileReader();
           reader.onloadend = () => {
             setImagePreview(reader.result);
-            updatePersonalInfo('profilePicture', reader.result); // Usar updatePersonalInfo
+            handleChange('personalInfo', 'profilePicture', reader.result);
             toast({ title: "Foto cargada", description: "Tu foto de perfil ha sido actualizada.", variant: "default" });
           };
           reader.onerror = () => {
@@ -141,7 +135,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
             const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
             if (dataUrl && dataUrl.length > 'data:image/jpeg;base64,'.length) {
               setImagePreview(dataUrl);
-              updatePersonalInfo('profilePicture', dataUrl); // Usar updatePersonalInfo
+              handleChange('personalInfo', 'profilePicture', dataUrl);
               closeCamera();
               toast({ title: "Foto capturada", description: "Tu foto de perfil ha sido tomada.", variant: "default" });
             } else {
@@ -169,7 +163,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 
       const removeImage = () => {
         setImagePreview(null);
-        updatePersonalInfo('profilePicture', null); // Usar updatePersonalInfo
+        handleChange('personalInfo', 'profilePicture', null);
         if (fileInputRef.current) fileInputRef.current.value = "";
         toast({ title: "Foto eliminada", description: "Tu foto de perfil ha sido eliminada.", variant: "default" });
       };
