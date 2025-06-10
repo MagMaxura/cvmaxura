@@ -64,16 +64,12 @@ const conversationalStepsConfig = [
 
 const HomePage = () => {
   const cvStoreData = useCVStore();
-  console.log("HomePage - cvStoreData:", cvStoreData); // Depuración
-  
   // Renderizar null o un spinner si cvStoreData aún no se ha hidratado
   if (!cvStoreData) {
-    return <div>Cargando...</div>; 
+    return <div>Cargando...</div>;
   }
 
-  const cvData = cvStoreData?.cvData; // Acceso seguro a la propiedad
-  const resetCVData = cvStoreData?.resetCVData; // Acceso seguro a la propiedad
-  console.log("HomePage - cvData (después de desestructuración):", cvData); // Depuración adicional
+  const { cvData, resetCVData } = cvStoreData;
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();

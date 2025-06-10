@@ -8,7 +8,17 @@ import React, { useEffect, useState } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const PersonalInfoStep = ({ cvData, handleChange, onStepComplete }) => {
+    const PersonalInfoStep = ({ cvStoreData, onStepComplete }) => { // Cambiar props para recibir cvStoreData
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      // Si la prop cvStoreData no ha llegado, muestra un estado de carga.
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+
+      // Ahora que sabemos que cvStoreData existe, podemos desestructurarlo de forma segura.
+      const { cvData, updatePersonalInfo } = cvStoreData; // Desestructurar cvData y updatePersonalInfo
+
       const { toast } = useToast();
       const {
         isListening,
@@ -25,7 +35,7 @@ import React, { useEffect, useState } from 'react';
       } = useSpeechRecognition();
 
       const [activeField, setActiveField] = useState(null);
-      const [fieldValues, setFieldValues] = useState(cvData.personalInfo);
+      const [fieldValues, setFieldValues] = useState(cvData.personalInfo); // Usar cvData.personalInfo
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
 
 
@@ -53,7 +63,7 @@ import React, { useEffect, useState } from 'react';
 
         Object.keys(fieldValues).forEach(key => {
             if(fieldValues[key] !== cvData.personalInfo[key]) {
-                 handleChange('personalInfo', key, fieldValues[key]);
+                 updatePersonalInfo(key, fieldValues[key]); // Usar updatePersonalInfo
             }
         });
         if (onStepComplete) onStepComplete();
@@ -61,7 +71,7 @@ import React, { useEffect, useState } from 'react';
 
       const handleLocalInputChange = (fieldName, value) => {
         setFieldValues(prev => ({ ...prev, [fieldName]: value }));
-        handleChange('personalInfo', fieldName, value); // Llama a handleChange aquí
+        updatePersonalInfo(fieldName, value); // Usar updatePersonalInfo
       };
       
       const handleInputBlur = (fieldName) => {
@@ -94,9 +104,9 @@ import React, { useEffect, useState } from 'react';
         if (!isListening && !isActivating && finalTranscript && activeField) {
           const newValue = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           handleLocalInputChange(activeField, newValue);
-          handleChange('personalInfo', activeField, newValue); 
+          updatePersonalInfo(activeField, newValue); // Usar updatePersonalInfo
           clearFinalTranscript();
-          setActiveField(null); 
+          setActiveField(null);
           setCurrentDictationFieldOriginalValue('');
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -9,7 +9,13 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const ProjectsStep = ({ cvData, handleChange, onStepComplete }) => {
+    const ProjectsStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateProjects } = cvStoreData; // Desestructurar cvData y updateProjects
       const [projectEntries, setProjectEntries] = useState(cvData.projects || [{ name: '', description: '', technologies: '', link: '' }]);
       const { toast } = useToast();
       const {
@@ -34,19 +40,19 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...projectEntries];
         updatedEntries[index][field] = value;
         setProjectEntries(updatedEntries);
-        handleChange('projects', null, updatedEntries);
+        updateProjects(updatedEntries); // Usar updateProjects
       };
 
       const addEntry = () => {
         const newEntries = [...projectEntries, { name: '', description: '', technologies: '', link: '' }];
         setProjectEntries(newEntries);
-        handleChange('projects', null, newEntries); // Guardar en el estado global inmediatamente
+        updateProjects(newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {
         const updatedEntries = projectEntries.filter((_, i) => i !== index);
         setProjectEntries(updatedEntries);
-        handleChange('projects', null, updatedEntries);
+        updateProjects(updatedEntries); // Usar updateProjects
       };
 
       const handleSubmit = (e) => {
@@ -65,8 +71,8 @@ import React, { useState, useEffect } from 'react';
           });
           return;
         }
-
-        handleChange('projects', null, projectEntries);
+ 
+        updateProjects(projectEntries); // Usar updateProjects
         if(onStepComplete) onStepComplete();
       };
 

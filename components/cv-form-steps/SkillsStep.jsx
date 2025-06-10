@@ -7,7 +7,13 @@ import React, { useState, useEffect } from 'react';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
     import SkillCategory from '@/components/cv-form-steps/skills-step/SkillCategory';
 
-    const SkillsStep = ({ cvData, handleChange, onStepComplete }) => {
+    const SkillsStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateSkills } = cvStoreData; // Desestructurar cvData y updateSkills
       const [technicalSkills, setTechnicalSkills] = useState(cvData.skills?.technical || [{ id: Date.now(), name: '', level: 3 }]);
       const [softSkills, setSoftSkills] = useState(cvData.skills?.soft || [{ id: Date.now() + 1, name: '', level: 3 }]);
       const [languages, setLanguages] = useState(cvData.skills?.languages || [{ id: Date.now() + 2, name: '', level: 3 }]);
@@ -33,10 +39,10 @@ import React, { useState, useEffect } from 'react';
       const makeUpdater = (setter, categoryKey) => {
         return (index, field, value) => {
           setter(prevSkills => {
-            const updatedSkills = prevSkills.map((skill, i) => 
+            const updatedSkills = prevSkills.map((skill, i) =>
               i === index ? { ...skill, [field]: value } : skill
             );
-            handleChange('skills', categoryKey, updatedSkills);
+            updateSkills(categoryKey, updatedSkills); // Usar updateSkills
             return updatedSkills;
           });
         };
@@ -46,7 +52,7 @@ import React, { useState, useEffect } from 'react';
         return () => {
           setter(prevSkills => {
             const newSkills = [...prevSkills, { id: Date.now(), name: '', level: 3 }];
-            handleChange('skills', categoryKey, newSkills);
+            updateSkills(categoryKey, newSkills); // Usar updateSkills
             return newSkills;
           });
         };
@@ -56,7 +62,7 @@ import React, { useState, useEffect } from 'react';
         return (index) => {
           setter(prevSkills => {
             const updatedSkills = prevSkills.filter((_, i) => i !== index);
-            handleChange('skills', categoryKey, updatedSkills);
+            updateSkills(categoryKey, updatedSkills); // Usar updateSkills
             return updatedSkills;
           });
         };
@@ -154,10 +160,10 @@ import React, { useState, useEffect } from 'react';
           });
           return;
         }
-
-        handleChange('skills', 'technical', technicalSkills);
-        handleChange('skills', 'soft', softSkills);
-        handleChange('skills', 'languages', languages);
+ 
+        updateSkills('technical', technicalSkills);
+        updateSkills('soft', softSkills);
+        updateSkills('languages', languages);
         if(onStepComplete) onStepComplete();
       };
 

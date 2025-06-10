@@ -15,7 +15,13 @@ import React, { useState, useEffect } from 'react';
       { id: 'workStyle', label: '¿Sos más de trabajar solo o en equipo?', type: 'text' },
     ];
 
-    const ConversationalSkillsStep = ({ cvData, handleChange, onStepComplete }) => {
+    const ConversationalSkillsStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateSkillsDetails } = cvStoreData; // Desestructurar cvData y updateSkillsDetails
       const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
       const [answers, setAnswers] = useState(cvData.skillsDetails || {});
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
@@ -39,7 +45,7 @@ import React, { useState, useEffect } from 'react';
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAnswers(prev => ({ ...prev, [name]: value }));
-        handleChange('skillsDetails', name, value);
+        updateSkillsDetails(name, value); // Usar updateSkillsDetails
       };
 
       const handleMicToggle = () => {
@@ -60,7 +66,7 @@ import React, { useState, useEffect } from 'react';
         if (!isListening && !isActivating && finalTranscript && currentFieldId) {
           const newAnswer = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           setAnswers(prev => ({ ...prev, [currentFieldId]: newAnswer }));
-          handleChange('skillsDetails', currentFieldId, newAnswer);
+          updateSkillsDetails(currentFieldId, newAnswer); // Usar updateSkillsDetails
           clearFinalTranscript();
           setCurrentDictationFieldOriginalValue('');
         }

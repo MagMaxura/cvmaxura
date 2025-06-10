@@ -12,7 +12,13 @@ import React, { useState, useEffect } from 'react';
       { id: 'languageProficiency', label: '¿Cómo venís con el inglés o algún otro idioma? ¿Lo usás para algo?', type: 'textarea' },
     ];
 
-    const ConversationalLanguagesStep = ({ cvData, handleChange, onStepComplete }) => {
+    const ConversationalLanguagesStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateLanguageDetails } = cvStoreData; // Desestructurar cvData y updateLanguageDetails
       const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
       const [answers, setAnswers] = useState(cvData.languageDetails || {});
       const [currentDictationFieldOriginalValue, setCurrentDictationFieldOriginalValue] = useState('');
@@ -36,7 +42,7 @@ import React, { useState, useEffect } from 'react';
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setAnswers(prev => ({ ...prev, [name]: value }));
-        handleChange('languageDetails', name, value);
+        updateLanguageDetails(name, value); // Usar updateLanguageDetails
       };
 
       const handleMicToggle = () => {
@@ -57,7 +63,7 @@ import React, { useState, useEffect } from 'react';
         if (!isListening && !isActivating && finalTranscript && currentFieldId) {
           const newAnswer = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           setAnswers(prev => ({ ...prev, [currentFieldId]: newAnswer }));
-          handleChange('languageDetails', currentFieldId, newAnswer);
+          updateLanguageDetails(currentFieldId, newAnswer); // Usar updateLanguageDetails
           clearFinalTranscript();
           setCurrentDictationFieldOriginalValue('');
         }

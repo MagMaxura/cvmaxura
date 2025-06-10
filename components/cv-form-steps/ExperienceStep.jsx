@@ -9,7 +9,13 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const ExperienceStep = ({ cvData, handleChange, onStepComplete }) => {
+    const ExperienceStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateExperience } = cvStoreData; // Desestructurar cvData y updateExperience
       const [experienceEntries, setExperienceEntries] = useState(cvData.experience || [{ company: '', role: '', startDate: '', endDate: '', description: '' }]);
       const { toast } = useToast();
       const {
@@ -34,7 +40,7 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...experienceEntries];
         updatedEntries[index][field] = value;
         setExperienceEntries(updatedEntries);
-        handleChange('experience', null, updatedEntries);
+        updateExperience(updatedEntries); // Usar updateExperience
       };
 
       const addEntry = () => {
@@ -51,13 +57,13 @@ import React, { useState, useEffect } from 'react';
 
         const newEntries = [...experienceEntries, { company: '', role: '', startDate: '', endDate: '', description: '' }];
         setExperienceEntries(newEntries);
-        handleChange('experience', null, newEntries); // Guardar en el estado global inmediatamente
+        updateExperience(newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {
         const updatedEntries = experienceEntries.filter((_, i) => i !== index);
         setExperienceEntries(updatedEntries);
-        handleChange('experience', null, updatedEntries);
+        updateExperience(updatedEntries); // Usar updateExperience
       };
 
       const handleSubmit = (e) => {
@@ -77,7 +83,7 @@ import React, { useState, useEffect } from 'react';
           return;
         }
         
-        handleChange('experience', null, experienceEntries);
+        updateExperience(experienceEntries); // Usar updateExperience
         if(onStepComplete) onStepComplete();
       };
 

@@ -9,7 +9,13 @@ import React, { useState, useEffect } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const EducationStep = ({ cvData, handleChange, onStepComplete }) => {
+    const EducationStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateEducation } = cvStoreData; // Desestructurar cvData y updateEducation
       const [educationEntries, setEducationEntries] = useState(cvData.education || [{ institution: '', degree: '', startDate: '', endDate: '', description: '' }]);
       const { toast } = useToast();
       const {
@@ -35,7 +41,7 @@ import React, { useState, useEffect } from 'react';
         const updatedEntries = [...educationEntries];
         updatedEntries[index][field] = value;
         setEducationEntries(updatedEntries);
-        handleChange('education', null, updatedEntries); 
+        updateEducation(updatedEntries); // Usar updateEducation
       };
 
       const addEntry = () => {
@@ -52,13 +58,13 @@ import React, { useState, useEffect } from 'react';
 
         const newEntries = [...educationEntries, { institution: '', degree: '', startDate: '', endDate: '', description: '' }];
         setEducationEntries(newEntries);
-        handleChange('education', null, newEntries); // Guardar en el estado global inmediatamente
+        updateEducation(newEntries); // Guardar en el estado global inmediatamente
       };
 
       const removeEntry = (index) => {
         const updatedEntries = educationEntries.filter((_, i) => i !== index);
         setEducationEntries(updatedEntries);
-        handleChange('education', null, updatedEntries);
+        updateEducation(updatedEntries); // Usar updateEducation
       };
 
       const handleSubmit = (e) => {
@@ -77,8 +83,8 @@ import React, { useState, useEffect } from 'react';
           });
           return;
         }
-
-        handleChange('education', null, educationEntries);
+ 
+        updateEducation(educationEntries); // Usar updateEducation
         if(onStepComplete) onStepComplete();
       };
 

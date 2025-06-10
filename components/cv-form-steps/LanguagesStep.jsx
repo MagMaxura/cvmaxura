@@ -75,7 +75,13 @@ import React, { useState, useEffect } from 'react';
       );
     };
 
-    const LanguagesStep = ({ cvData, updateCVData, onStepComplete }) => {
+    const LanguagesStep = ({ cvStoreData, onStepComplete }) => {
+      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
+      if (!cvStoreData) {
+        return <p>Cargando...</p>;
+      }
+      // ------------------------------------
+      const { cvData, updateLanguages } = cvStoreData; // Desestructurar cvData y updateLanguages
       const [languages, setLanguages] = useState(cvData.languages || []);
       const [newLang, setNewLang] = useState({ name: '', level: languageLevels[1] }); // Default to Intermedio
       const [editingIndex, setEditingIndex] = useState(null);
@@ -97,7 +103,7 @@ import React, { useState, useEffect } from 'react';
         }
         const updatedLangs = [...languages, newLang];
         setLanguages(updatedLangs);
-        updateCVData('languages', updatedLangs);
+        updateLanguages(updatedLangs); // Usar updateLanguages
         setNewLang({ name: '', level: languageLevels[1] });
         toast({ title: "Idioma agregado", description: `${newLang.name} ha sido añadido.`, className: "bg-green-100 dark:bg-green-800 border-green-300 dark:border-green-600" });
       };
@@ -105,7 +111,7 @@ import React, { useState, useEffect } from 'react';
       const updateLanguage = (index, updatedLang) => {
         const updatedLangs = languages.map((lang, i) => i === index ? updatedLang : lang);
         setLanguages(updatedLangs);
-        updateCVData('languages', updatedLangs);
+        updateLanguages(updatedLangs); // Usar updateLanguages
         setEditingIndex(null);
         toast({ title: "Idioma actualizado", description: `${updatedLang.name} ha sido modificado.`, className: "bg-blue-100 dark:bg-blue-800 border-blue-300 dark:border-blue-600" });
       };
@@ -114,7 +120,7 @@ import React, { useState, useEffect } from 'react';
         const langNameToRemove = languages[index].name;
         const updatedLangs = languages.filter((_, i) => i !== index);
         setLanguages(updatedLangs);
-        updateCVData('languages', updatedLangs);
+        updateLanguages(updatedLangs); // Usar updateLanguages
         toast({ title: "Idioma eliminado", description: `${langNameToRemove} ha sido eliminado.`, variant: "destructive" });
       };
 
