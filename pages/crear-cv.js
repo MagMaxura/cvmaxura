@@ -7,22 +7,22 @@ import { useToast } from '../components/ui/use-toast';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import PersonalInfoStep from '../components/cv-form-steps/PersonalInfoStep';
-import ExperienceStep from '../components/cv-form-steps/ExperienceStep';
-import EducationStep from '../components/cv-form-steps/EducationStep';
-import SkillsStep from '../components/cv-form-steps/SkillsStep';
-import ProjectsStep from '../components/cv-form-steps/ProjectsStep';
+import PersonalInfoStep from '../components/cv-form-steps/PersonalInfoStep.jsx';
+import ExperienceStep from '../components/cv-form-steps/ExperienceStep.jsx';
+import EducationStep from '../components/cv-form-steps/EducationStep.jsx';
+import SkillsStep from '../components/cv-form-steps/SkillsStep.jsx';
+import ProjectsStep from '../components/cv-form-steps/ProjectsStep.jsx';
 import CertificationsStep from '../components/cv-form-steps/CertificationsStep.jsx';
 import LanguagesStep from '../components/cv-form-steps/LanguagesStep.jsx';
-import ProfilePictureStep from '../components/cv-form-steps/ProfilePictureStep';
-import PreviewStep from '../components/cv-form-steps/PreviewStep';
+import ProfilePictureStep from '../components/cv-form-steps/ProfilePictureStep.jsx';
+import PreviewStep from '../components/cv-form-steps/PreviewStep.jsx';
 
-import ConversationalEducationStep from '../components/cv-form-steps/conversational-steps/ConversationalEducationStep';
-import ConversationalExperienceStep from '../components/cv-form-steps/conversational-steps/ConversationalExperienceStep';
-import ConversationalSkillsStep from '../components/cv-form-steps/conversational-steps/ConversationalSkillsStep';
-import ConversationalLanguagesStep from '../components/cv-form-steps/conversational-steps/ConversationalLanguagesStep';
-import ConversationalInterestsStep from '../components/cv-form-steps/conversational-steps/ConversationalInterestsStep';
-import ConversationalOtherInfoStep from '../components/cv-form-steps/conversational-steps/ConversationalOtherInfoStep';
+import ConversationalEducationStep from '../components/cv-form-steps/conversational-steps/ConversationalEducationStep.jsx';
+import ConversationalExperienceStep from '../components/cv-form-steps/conversational-steps/ConversationalExperienceStep.jsx';
+import ConversationalSkillsStep from '../components/cv-form-steps/conversational-steps/ConversationalSkillsStep.jsx';
+import ConversationalLanguagesStep from '../components/cv-form-steps/conversational-steps/ConversationalLanguagesStep.jsx';
+import ConversationalInterestsStep from '../components/cv-form-steps/conversational-steps/ConversationalInterestsStep.jsx';
+import ConversationalOtherInfoStep from '../components/cv-form-steps/conversational-steps/ConversationalOtherInfoStep.jsx';
 
 import useCVStore from '../hooks/useCVStore';
 import ModeSelection from '../components/home/ModeSelection.jsx';
