@@ -1,16 +1,20 @@
 import React from 'react';
     import { motion, AnimatePresence } from 'framer-motion';
 
-    const StepRenderer = ({ 
-      currentStepIndex, 
-      CurrentStepComponent, 
-      cvStoreData, 
-      onStepComplete, 
-      cvPreviewRef, 
+    const StepRenderer = ({
+      currentStepIndex,
+      CurrentStepComponent,
+      cvData,
+      updateCVData,
+      updateCVField,
+      addListItem,
+      updateListItem,
+      removeListItem,
+      onStepComplete,
+      cvPreviewRef,
       downloadPDF,
       isDownloading
     }) => {
-      const { cvData, updateCVData, updateCVField, addListItem, updateListItem, removeListItem } = cvStoreData;
 
       return (
         <AnimatePresence mode="wait">

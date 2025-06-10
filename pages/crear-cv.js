@@ -70,7 +70,7 @@ const HomePage = () => {
     return <div>Cargando...</div>; 
   }
 
-  const { cvData, resetCVData } = cvStoreData;
+  const { cvData, resetCVData, updateCVData, updateCVField, addListItem, updateListItem, removeListItem } = cvStoreData;
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();
@@ -203,7 +203,12 @@ const HomePage = () => {
               <StepRenderer
                 currentStepIndex={currentStepIndex}
                 CurrentStepComponent={currentStepConfig?.component}
-                cvStoreData={cvStoreData}
+                cvData={cvData}
+                updateCVData={updateCVData}
+                updateCVField={updateCVField}
+                addListItem={addListItem}
+                updateListItem={updateListItem}
+                removeListItem={removeListItem}
                 onStepComplete={handleNext}
                 cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
                 downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
