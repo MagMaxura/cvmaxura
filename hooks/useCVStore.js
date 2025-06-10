@@ -57,48 +57,51 @@ import { useToast } from '@/components/ui/use-toast';
     
     const useCVStore = () => {
       const { toast } = useToast();
-      const [cvData, setCvData] = useState(() => {
-        try {
-          const item = window.localStorage.getItem('cvData');
-          if (item) {
-            const parsedItem = JSON.parse(item);
-            
-            const currentPersonalInfo = { ...initialCVDataGlobal.personalInfo, ...parsedItem.personalInfo };
-            delete currentPersonalInfo.github; 
-            delete currentPersonalInfo.profileSummary; 
-            if (parsedItem.personalInfo && parsedItem.personalInfo.address && !parsedItem.personalInfo.currentLocation) {
-              currentPersonalInfo.currentLocation = parsedItem.personalInfo.address; 
-            }
-            
-            const mergedData = { ...initialCVDataGlobal };
-            for (const key in initialCVDataGlobal) {
-              if (parsedItem[key] !== undefined) { 
-                if (Array.isArray(initialCVDataGlobal[key])) {
-                  mergedData[key] = Array.isArray(parsedItem[key]) ? parsedItem[key] : initialCVDataGlobal[key];
-                } else if (typeof initialCVDataGlobal[key] === 'object' && initialCVDataGlobal[key] !== null) {
-                  mergedData[key] = { ...initialCVDataGlobal[key], ...parsedItem[key] };
-                } else {
-                  mergedData[key] = parsedItem[key];
-                }
-              }
-            }
-            mergedData.personalInfo = currentPersonalInfo;
-
-            return mergedData;
-          }
-          return initialCVDataGlobal;
-        } catch (error)          {
-          console.error("Error reading from localStorage", error);
-          return initialCVDataGlobal;
-        }
-      });
+      const [cvData, setCvData] = useState(initialCVDataGlobal);
 
       useEffect(() => {
-        try {
-          window.localStorage.setItem('cvData', JSON.stringify(cvData));
-          console.log("useCVStore - cvData actualizado y guardado en localStorage:", cvData);
-        } catch (error) {
-          console.error("Error writing to localStorage", error);
+        if (typeof window !== 'undefined') {
+          try {
+            const item = window.localStorage.getItem('cvData');
+            if (item) {
+              const parsedItem = JSON.parse(item);
+              
+              const currentPersonalInfo = { ...initialCVDataGlobal.personalInfo, ...parsedItem.personalInfo };
+              delete currentPersonalInfo.github;
+              delete currentPersonalInfo.profileSummary;
+              if (parsedItem.personalInfo && parsedItem.personalInfo.address && !parsedItem.personalInfo.currentLocation) {
+                currentPersonalInfo.currentLocation = parsedItem.personalInfo.address;
+              }
+              
+              const mergedData = { ...initialCVDataGlobal };
+              for (const key in initialCVDataGlobal) {
+                if (parsedItem[key] !== undefined) {
+                  if (Array.isArray(initialCVDataGlobal[key])) {
+                    mergedData[key] = Array.isArray(parsedItem[key]) ? parsedItem[key] : initialCVDataGlobal[key];
+                  } else if (typeof initialCVDataGlobal[key] === 'object' && initialCVDataGlobal[key] !== null) {
+                    mergedData[key] = { ...initialCVDataGlobal[key], ...parsedItem[key] };
+                  } else {
+                    mergedData[key] = parsedItem[key];
+                  }
+                }
+              }
+              mergedData.personalInfo = currentPersonalInfo;
+              setCvData(mergedData);
+            }
+          } catch (error) {
+            console.error("Error reading from localStorage", error);
+          }
+        }
+      }, []); // Se ejecuta solo una vez al montar el componente
+
+      useEffect(() => {
+        if (typeof window !== 'undefined') {
+          try {
+            window.localStorage.setItem('cvData', JSON.stringify(cvData));
+            console.log("useCVStore - cvData actualizado y guardado en localStorage:", cvData);
+          } catch (error) {
+            console.error("Error writing to localStorage", error);
+          }
         }
       }, [cvData]);
 
