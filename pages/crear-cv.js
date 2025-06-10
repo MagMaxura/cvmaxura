@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import ClientOnly from '../components/utils/ClientOnly.jsx'; // Importar ClientOnly
 
 const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
 import { Progress } from '../components/ui/progress';
@@ -167,70 +168,70 @@ const HomePage = () => {
   const IconComponent = currentStepConfig?.icon || Edit3;
 
   return (
-    <MotionDiv
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5 }}
-      className="w-full max-w-6xl mx-auto p-2 sm:p-0 grid grid-cols-1 lg:grid-cols-3 gap-4" // Modificado para grid
-    >
-      <div className="lg:col-span-2"> {/* Contenedor para el formulario */}
-        <Card className="shadow-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur-md border-slate-200 dark:border-slate-700/50 overflow-hidden">
-          <CardHeader className="border-b border-slate-200 dark:border-slate-700/50 p-4 sm:p-5">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center">
-                <IconComponent className="h-7 w-7 text-primary mr-2.5" />
-                <CardTitle className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-gray-100">
-                  {currentStepConfig?.title || 'Paso Actual'}
-                </CardTitle>
+    <ClientOnly>
+      <MotionDiv
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-6xl mx-auto p-2 sm:p-0 grid grid-cols-1 lg:grid-cols-3 gap-4" // Modificado para grid
+      >
+        <div className="lg:col-span-2"> {/* Contenedor para el formulario */}
+          <Card className="shadow-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur-md border-slate-200 dark:border-slate-700/50 overflow-hidden">
+            <CardHeader className="border-b border-slate-200 dark:border-slate-700/50 p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center">
+                  <IconComponent className="h-7 w-7 text-primary mr-2.5" />
+                  <CardTitle className="text-xl sm:text-2xl font-semibold text-slate-800 dark:text-gray-100">
+                    {currentStepConfig?.title || 'Paso Actual'}
+                  </CardTitle>
+                </div>
+                <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                  Paso {currentStepIndex + 1} de {steps.length}
+                </span>
               </div>
-              <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-                Paso {currentStepIndex + 1} de {steps.length}
-              </span>
-            </div>
-            <Progress value={progress} className="w-full h-2 [&>div]:bg-gradient-to-r [&>div]:from-teal-400 [&>div]:to-cyan-500" />
-          </CardHeader>
+              <Progress value={progress} className="w-full h-2 [&>div]:bg-gradient-to-r [&>div]:from-teal-400 [&>div]:to-cyan-500" />
+            </CardHeader>
 
-          <CardContent className="p-3 sm:p-5 min-h-[300px] sm:min-h-[400px] flex flex-col justify-center items-center">
-            <StepRenderer
+            <CardContent className="p-3 sm:p-5 min-h-[300px] sm:min-h-[400px] flex flex-col justify-center items-center">
+              <StepRenderer
+                currentStepIndex={currentStepIndex}
+                CurrentStepComponent={currentStepConfig?.component}
+                cvStoreData={cvStoreData}
+                onStepComplete={handleNext}
+                cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
+                downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
+                isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
+              />
+            </CardContent>
+
+            <NavigationControls
               currentStepIndex={currentStepIndex}
-              CurrentStepComponent={currentStepConfig?.component}
-              cvStoreData={cvStoreData}
-              onStepComplete={handleNext}
-              cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
-              downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
-              isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
+              isLastStep={currentStepConfig?.id === 'preview'}
+              onBack={handleBack}
+              onNext={handleNext}
+              onReset={handleReset}
+              // Deshabilitar el botón "Siguiente" en los pasos de vista previa intermedios para evitar doble avance
+              disableNext={currentStepConfig?.id.startsWith('preview') && currentStepConfig?.id !== 'preview'}
             />
-          </CardContent>
-
-          <NavigationControls
+          </Card>
+        </div>
+        {/* Columna para el resumen del CV */}
+        <div className="hidden lg:block"> {/* Ocultar en pantallas pequeñas */}
+          <CVProgressSummary
+            cvData={cvData}
             currentStepIndex={currentStepIndex}
-            isLastStep={currentStepConfig?.id === 'preview'}
-            onBack={handleBack}
-            onNext={handleNext}
-            onReset={handleReset}
-            // Deshabilitar el botón "Siguiente" en los pasos de vista previa intermedios para evitar doble avance
-            disableNext={currentStepConfig?.id.startsWith('preview') && currentStepConfig?.id !== 'preview'}
+            stepsConfig={steps}
           />
-        </Card>
-      </div>
-      {/* Columna para el resumen del CV */}
-      <div className="hidden lg:block"> {/* Ocultar en pantallas pequeñas */}
-        <CVProgressSummary
-          cvData={cvData}
-          currentStepIndex={currentStepIndex}
-          stepsConfig={steps}
-        />
-      </div>
-      {/* Bloque de depuración visible */}
-      <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
-        <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>
-        <pre className="whitespace-pre-wrap break-all">{JSON.stringify(cvData, null, 2)}</pre>
-      </div>
-    </MotionDiv>
+        </div>
+        {/* Bloque de depuración visible */}
+        <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
+          <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>
+          <pre className="whitespace-pre-wrap break-all">{JSON.stringify(cvData, null, 2)}</pre>
+        </div>
+      </MotionDiv>
+    </ClientOnly>
   );
 };
 
 export default HomePage;
-
-export const ssr = false;
