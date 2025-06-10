@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import CVPreviewContent from '../../components/cv-preview/CVPreviewContent';
 import CVDownloadButton from '../../components/cv-preview/CVDownloadButton';
 
-const PreviewStep = ({ cvStoreData, cvPreviewRef, downloadPDF, isDownloading }) => {
-  const { cvData } = cvStoreData;
+const PreviewStep = ({ cvData, cvPreviewRef, downloadPDF, isDownloading }) => {
 
   return (
     <motion.div
