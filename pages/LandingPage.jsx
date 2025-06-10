@@ -185,8 +185,7 @@ import React from 'react';
               </MotionDiv>
             </div>
           </section>
-        </div> {/* Cierre de la div principal */}
-        </MotionDiv>
+          </div>
       );
     };
 
