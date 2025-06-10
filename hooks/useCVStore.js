@@ -197,7 +197,16 @@ import { useToast } from '@/components/ui/use-toast';
         return JSON.parse(JSON.stringify(initialCVDataGlobal)); 
       };
 
-      return { cvData, updateCVData, updateCVField, addListItem, updateListItem, removeListItem, resetCVData, getInitialCVData };
+      return {
+        cvData: cvData || initialCVDataGlobal, // Asegurar que cvData siempre sea un objeto
+        updateCVData,
+        updateCVField,
+        addListItem,
+        updateListItem,
+        removeListItem,
+        resetCVData,
+        getInitialCVData
+      };
     };
 
     export default useCVStore;
