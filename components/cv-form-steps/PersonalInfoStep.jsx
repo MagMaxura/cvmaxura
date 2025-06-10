@@ -8,16 +8,7 @@ import React, { useEffect, useState } from 'react';
     import { useToast } from '@/components/ui/use-toast';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
-    const PersonalInfoStep = ({ cvStoreData, onStepComplete }) => { // Cambiar props para recibir cvStoreData
-      // --- AÑADIR ESTA VERIFICACIÓN AQUÍ ---
-      // Si la prop cvStoreData no ha llegado, muestra un estado de carga.
-      if (!cvStoreData) {
-        return <p>Cargando...</p>;
-      }
-      // ------------------------------------
-
-      // Ahora que sabemos que cvStoreData existe, podemos desestructurarlo de forma segura.
-      const { cvData, updatePersonalInfo } = cvStoreData; // Desestructurar cvData y updatePersonalInfo
+    const PersonalInfoStep = ({ cvData, handleChange, onStepComplete }) => {
 
       const { toast } = useToast();
       const {
@@ -63,7 +54,7 @@ import React, { useEffect, useState } from 'react';
 
         Object.keys(fieldValues).forEach(key => {
             if(fieldValues[key] !== cvData.personalInfo[key]) {
-                 updatePersonalInfo(key, fieldValues[key]); // Usar updatePersonalInfo
+                 handleChange('personalInfo', key, fieldValues[key]);
             }
         });
         if (onStepComplete) onStepComplete();
@@ -71,7 +62,7 @@ import React, { useEffect, useState } from 'react';
 
       const handleLocalInputChange = (fieldName, value) => {
         setFieldValues(prev => ({ ...prev, [fieldName]: value }));
-        updatePersonalInfo(fieldName, value); // Usar updatePersonalInfo
+        handleChange('personalInfo', fieldName, value);
       };
       
       const handleInputBlur = (fieldName) => {
@@ -104,7 +95,7 @@ import React, { useEffect, useState } from 'react';
         if (!isListening && !isActivating && finalTranscript && activeField) {
           const newValue = currentDictationFieldOriginalValue ? `${currentDictationFieldOriginalValue} ${finalTranscript}`.trim() : finalTranscript;
           handleLocalInputChange(activeField, newValue);
-          updatePersonalInfo(activeField, newValue); // Usar updatePersonalInfo
+          handleChange('personalInfo', activeField, newValue);
           clearFinalTranscript();
           setActiveField(null);
           setCurrentDictationFieldOriginalValue('');
