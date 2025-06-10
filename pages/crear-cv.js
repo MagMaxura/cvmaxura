@@ -1,6 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-
 const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
 import { Progress } from '../components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
