@@ -64,9 +64,10 @@ const conversationalStepsConfig = [
 
 const HomePage = () => {
   const cvStoreData = useCVStore();
+  
   // Renderizar null o un spinner si cvStoreData aún no se ha hidratado
   if (!cvStoreData) {
-    return <div>Cargando...</div>;
+    return <div>Cargando...</div>; 
   }
 
   const { cvData, resetCVData } = cvStoreData;
