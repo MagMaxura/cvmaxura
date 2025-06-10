@@ -2,10 +2,10 @@
 module.exports = {
 	darkMode: ['class'],
 	content: [
-		'./pages/**/*.{js,jsx}',
-		'./components/**/*.{js,jsx}',
-		'./app/**/*.{js,jsx}',
-		'./src/**/*.{js,jsx}',
+		'./pages/**/*.{js,jsx,ts,tsx}', // Updated for Next.js pages
+		'./components/**/*.{js,jsx,ts,tsx}', // Updated for Next.js components
+		'./app/**/*.{js,jsx,ts,tsx}', // Next.js App Router (if used)
+		'./src/**/*.{js,jsx,ts,tsx}', // Original src directory (if still relevant)
 	],
 	theme: {
 		container: {
