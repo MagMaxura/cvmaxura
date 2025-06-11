@@ -3,6 +3,8 @@ import React from 'react';
     import { Download, Loader2 } from 'lucide-react';
 
     const CVDownloadButton = ({ downloadPDF, cvPreviewRef, isDownloading }) => {
+      console.log("CVDownloadButton - cvPreviewRef:", cvPreviewRef);
+      console.log("CVDownloadButton - cvPreviewRef.current:", cvPreviewRef?.current);
       const isButtonDisabled = !cvPreviewRef || !cvPreviewRef.current || isDownloading;
 
       return (

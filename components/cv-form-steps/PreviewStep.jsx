@@ -13,8 +13,8 @@ const PreviewStep = ({ cvData, cvPreviewRef, downloadPDF, isDownloading }) => {
       className="w-full flex flex-col items-center justify-center p-4"
     >
       <h2 className="text-2xl font-bold text-slate-800 dark:text-gray-100 mb-6">Previsualización de tu CV</h2>
-      <div ref={cvPreviewRef} className="w-full max-w-a4 mx-auto shadow-lg rounded-lg overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
-        <CVPreviewContent cvData={cvData} />
+      <div className="w-full max-w-a4 mx-auto shadow-lg rounded-lg overflow-hidden bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+        <CVPreviewContent cvData={cvData} cvPreviewRef={cvPreviewRef} />
       </div>
       <div className="mt-8">
         <CVDownloadButton
