@@ -19,6 +19,7 @@ import CertificationsStep from '../components/cv-form-steps/CertificationsStep.j
 import LanguagesStep from '../components/cv-form-steps/LanguagesStep.jsx';
 import ProfilePictureStep from '../components/cv-form-steps/ProfilePictureStep.jsx';
 import PreviewStep from '../components/cv-form-steps/PreviewStep.jsx';
+import CVPreviewContent from '../components/cv-preview/CVPreviewContent.jsx'; // Importar CVPreviewContent
 
 import ConversationalEducationStep from '../components/cv-form-steps/conversational-steps/ConversationalEducationStep.jsx';
 import ConversationalExperienceStep from '../components/cv-form-steps/conversational-steps/ConversationalExperienceStep.jsx';
@@ -196,6 +197,7 @@ const HomePage = () => {
                 onStepComplete={handleNext}
                 downloadPDF={currentStepConfig?.id === 'preview' ? () => downloadPDF() : undefined}
                 isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
+                cvPreviewRef={cvPreviewRef} // Pasar la ref al StepRenderer
               />
             </CardContent>
 
@@ -215,6 +217,10 @@ const HomePage = () => {
             currentStepIndex={currentStepIndex}
             stepsConfig={steps}
           />
+        </div>
+        {/* Renderizar CVPreviewContent fuera del flujo normal para que html2canvas pueda acceder a él */}
+        <div className="absolute -top-[9999px] -left-[9999px] opacity-0 pointer-events-none">
+          <CVPreviewContent cvData={cvData} ref={cvPreviewRef} />
         </div>
         <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
           <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>

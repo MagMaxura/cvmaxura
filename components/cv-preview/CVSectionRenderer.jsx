@@ -15,7 +15,7 @@ import React from 'react';
             }
 
             return (
-              <CVSection key={`${section.keyPrefix}-section-${index}`} icon={section.icon} title={section.title}>
+              <CVSection key={`${section.keyPrefix}-section-${index}`} icon={section.icon} title={section.title} className="cv-section">
                 {section.isListContainer && hasFormItems ? (
                   <ul className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1.5">
                       <CVSectionContent

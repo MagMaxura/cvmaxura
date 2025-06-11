@@ -1,14 +1,15 @@
 import React from 'react';
     import { User as UserIcon, Link as LinkIcon, MapPin, Phone, Mail, Globe, Users, CalendarDays } from 'lucide-react';
 
-    const DetailItem = ({ icon, value, link }) => {
+    const DetailItem = ({ icon: IconComponent, value, link }) => {
       if (!value) return null;
-      const IconComponent = icon;
       return (
         <div className="flex items-start text-xs md:text-sm text-slate-600 dark:text-slate-300 mb-0.5">
-          {IconComponent && <IconComponent className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-500 dark:text-slate-400 mr-1.5 mt-0.5 flex-shrink-0" />}
+          <div className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-500 dark:text-slate-400 mr-1.5 mt-0.5 flex-shrink-0 flex items-center justify-center">
+            {IconComponent && <IconComponent className="w-full h-full" />}
+          </div>
           {link ? (
-            <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline text-sky-600 dark:text-sky-400 break-all">{value}</a>
+            <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline text-sky-600 dark:text-sky-400 break-all flex-grow">{value}</a>
           ) : (
             <span className="break-words flex-grow">{value}</span>
           )}
