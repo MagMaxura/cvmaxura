@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 
     const ProfilePictureStep = ({ cvData, handleChange, onStepComplete }) => {
       const { toast } = useToast();
-      const [imagePreview, setImagePreview] = useState(cvData.personalInfo.profilePicture || null);
+      const [imagePreview, setImagePreview] = useState(null);
       const [isCameraOpen, setIsCameraOpen] = useState(false);
       const [isStreamReady, setIsStreamReady] = useState(false);
       const videoRef = useRef(null);
@@ -15,8 +15,10 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
       const streamRef = useRef(null);
 
       useEffect(() => {
-        setImagePreview(cvData.personalInfo.profilePicture || null);
-      }, [cvData.personalInfo.profilePicture]);
+        if (cvData && cvData.personalInfo) {
+          setImagePreview(cvData.personalInfo.profilePicture || null);
+        }
+      }, [cvData]);
 
       const stopCurrentStream = useCallback(() => {
         if (streamRef.current) {

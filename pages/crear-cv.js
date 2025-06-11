@@ -36,13 +36,9 @@ import CVGenerator from '../lib/cvGenerator';
 
 const formStepsConfig = [
   { id: 'personalInfo', title: 'Información Personal', icon: Edit3, component: PersonalInfoStep },
-  { id: 'previewPersonalInfo', title: 'Previsualizar Información Personal', icon: FileText, component: PreviewStep },
   { id: 'profilePicture', title: 'Foto de Perfil', icon: ImageIcon, component: ProfilePictureStep },
-  { id: 'previewProfilePicture', title: 'Previsualizar Foto de Perfil', icon: FileText, component: PreviewStep },
   { id: 'experience', title: 'Experiencia Laboral', icon: Edit3, component: ExperienceStep },
-  { id: 'previewExperience', title: 'Previsualizar Experiencia Laboral', icon: FileText, component: PreviewStep },
   { id: 'education', title: 'Educación', icon: Edit3, component: EducationStep },
-  { id: 'previewEducation', title: 'Previsualizar Educación', icon: FileText, component: PreviewStep },
   { id: 'skills', title: 'Habilidades', icon: Edit3, component: SkillsStep },
   { id: 'projects', title: 'Proyectos', icon: Edit3, component: ProjectsStep },
   { id: 'certifications', title: 'Certificaciones', icon: Award, component: CertificationsStep },
