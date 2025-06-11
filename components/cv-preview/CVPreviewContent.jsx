@@ -6,7 +6,6 @@ import React from 'react';
     import { getSectionDefinitions } from '@/components/cv-preview/cvSectionDefinitions';
 
     const CVPreviewContent = ({ cvData }) => {
-      console.log("CVPreviewContent - cvData recibido:", cvData);
       const {
         personalInfo = {},
         educationDetails = {},
@@ -30,7 +29,7 @@ import React from 'react';
       return (
         <div id="cv-preview-scroll-container" className="flex-grow overflow-y-auto rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-100/50 dark:bg-slate-800/40 p-1.5">
           <Card id="cv-preview-card" className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 p-4 md:p-6 shadow-xl w-full min-h-full">
-            <div ref={cvPreviewRef} className="relative p-3 md:p-4 border border-gray-200 dark:border-slate-700 min-h-[297mm_scaled_to_fit] flex flex-col">
+            <div id="cv-content-to-download" className="relative p-3 md:p-4 border border-gray-200 dark:border-slate-700 min-h-[297mm_scaled_to_fit] flex flex-col">
               <CVHeader personalInfo={personalInfo} />
               <main className="flex-grow space-y-3 md:space-y-4">
                 <CVSectionRenderer sections={sections} />
