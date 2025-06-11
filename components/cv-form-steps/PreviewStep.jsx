@@ -17,7 +17,7 @@ const PreviewStep = ({ cvData, downloadPDF, isDownloading, cvPreviewRef }) => {
       </div>
       <div className="mt-8">
         <CVDownloadButton
-          onDownload={downloadPDF}
+          onDownload={() => downloadPDF(cvPreviewRef)}
           isDownloading={isDownloading}
         />
       </div>

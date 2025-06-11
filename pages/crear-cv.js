@@ -117,10 +117,9 @@ const HomePage = () => {
   };
 
   const downloadPDF = async () => {
-    const element = document.getElementById('cv-content-to-download');
-    console.log("downloadPDF - Elemento obtenido por ID:", element);
-    if (isDownloading || !element) {
-      if (!element) {
+    console.log("downloadPDF - cvPreviewRef actual:", cvPreviewRef.current);
+    if (isDownloading || !cvPreviewRef.current) {
+      if (!cvPreviewRef.current) {
         toast({ title: "Error", description: "Vista previa no disponible. Asegúrate de que el contenido del CV esté visible.", variant: "destructive"});
       }
       return;
@@ -130,7 +129,7 @@ const HomePage = () => {
 
     try {
         await new Promise(resolve => setTimeout(resolve, 50)); // Pequeño retraso para asegurar que el DOM esté listo
-        await CVGenerator.downloadCVAsPDF(element, cvData.personalInfo.fullName || 'CV');
+        await CVGenerator.downloadCVAsPDF(cvPreviewRef, cvData.personalInfo.fullName || 'CV');
         toast({
             title: "¡PDF Descargado!",
             description: "Tu CV ha sido guardado.",
