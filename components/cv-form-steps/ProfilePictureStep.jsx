@@ -81,9 +81,12 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 
               if (playPromise !== undefined) {
                 playPromise.then(() => {
-                  if (videoRef.current && videoRef.current.readyState >= 3) { 
-                    setIsStreamReady(true);
-                  }
+                  // Esperar un poco para asegurar que el video esté renderizado y tenga dimensiones
+                  setTimeout(() => {
+                    if (videoRef.current && videoRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA && videoRef.current.videoWidth > 0 && videoRef.current.videoHeight > 0) {
+                      setIsStreamReady(true);
+                    }
+                  }, 100); // Pequeño retraso para asegurar la renderización
                 }).catch(playError => {
                   console.error("Error playing video:", playError);
                   toast({ title: "Error de Cámara", description: "No se pudo reproducir el video de la cámara. Asegúrate de que los permisos estén concedidos.", variant: "destructive" });
@@ -91,13 +94,14 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
                 });
               }
               
+              // Asegurarse de que isStreamReady se establezca solo cuando el video tenga dimensiones válidas
               videoRef.current.onloadedmetadata = () => {
-                if (videoRef.current && videoRef.current.readyState >= 3) {
+                if (videoRef.current && videoRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA && videoRef.current.videoWidth > 0 && videoRef.current.videoHeight > 0) {
                     setIsStreamReady(true);
                 }
               };
               videoRef.current.oncanplay = () => {
-                if (videoRef.current && videoRef.current.readyState >= 3) {
+                if (videoRef.current && videoRef.current.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA && videoRef.current.videoWidth > 0 && videoRef.current.videoHeight > 0) {
                      setIsStreamReady(true);
                 }
               };
