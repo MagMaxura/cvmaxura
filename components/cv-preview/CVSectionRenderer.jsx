@@ -13,8 +13,6 @@ import React from 'react';
             if (!hasFormItems && !hasConvDetails) {
               return null;
             }
-            // Eliminar la segunda condición para asegurar que los datos conversacionales siempre se muestren si existen
-            // if (!hasFormItems && hasConvDetails && !section.showConversationalDataWhenFormIsEmpty) return null;
 
             return (
               <CVSection key={`${section.keyPrefix}-section-${index}`} icon={section.icon} title={section.title}>

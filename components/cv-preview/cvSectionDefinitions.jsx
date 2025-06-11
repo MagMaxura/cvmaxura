@@ -3,7 +3,7 @@ import React from 'react';
 
     const renderExperienceItem = (exp) => (
       <>
-        <h3 className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-100">{exp.jobTitle || "Cargo"}</h3>
+        <h3 className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-100">{exp.role || "Cargo"}</h3>
         <p className="text-sm md:text-base text-slate-700 dark:text-slate-200 font-normal">{exp.company || "Empresa"}</p>
         <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">{exp.startDate || "Fecha Inicio"} - {exp.endDate || "Fecha Fin"}</p>
         {exp.description && <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{exp.description}</p>}
@@ -14,7 +14,7 @@ import React from 'react';
       <>
         <h3 className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-100">{edu.degree || "Título"}</h3>
         <p className="text-sm md:text-base text-slate-700 dark:text-slate-200 font-normal">{edu.institution || "Institución"}</p>
-        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">Año de Graduación: {edu.gradYear || "Año"}</p>
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">Fecha de Fin: {edu.endDate || "Fecha"}</p>
         {edu.description && <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1 whitespace-pre-wrap">{edu.description}</p>}
       </>
     );
