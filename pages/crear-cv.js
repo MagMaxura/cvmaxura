@@ -219,7 +219,9 @@ const HomePage = () => {
           />
         </div>
         {/* Renderizar CVPreviewContent fuera del flujo normal para que html2canvas pueda acceder a él */}
-        <div className="absolute -top-[9999px] -left-[9999px] opacity-0 pointer-events-none">
+        {/* Renderizar CVPreviewContent fuera del flujo normal para que html2canvas pueda acceder a él */}
+        {/* Usar fixed y left-full para moverlo fuera de la pantalla sin sacarlo del flujo de renderizado de html2canvas */}
+        <div className="fixed top-0 left-full w-[210mm] h-[297mm] overflow-hidden z-[-1] p-4" style={{ transform: 'translateX(0)' }}>
           <CVPreviewContent cvData={cvData} ref={cvPreviewRef} />
         </div>
         <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
