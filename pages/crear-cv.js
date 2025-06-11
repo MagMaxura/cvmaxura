@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import ClientOnly from '../components/utils/ClientOnly.jsx'; // Importar ClientOnly
+import ClientOnly from '../components/utils/ClientOnly.jsx';
 
 const MotionDiv = dynamic(() => import('framer-motion').then(mod => mod.motion.div), { ssr: false });
 import { Progress } from '../components/ui/progress';
@@ -31,7 +31,7 @@ import useCVStore from '../hooks/useCVStore';
 import ModeSelection from '../components/home/ModeSelection.jsx';
 import StepRenderer from '../components/home/StepRenderer.jsx';
 import NavigationControls from '../components/home/NavigationControls.jsx';
-import CVProgressSummary from '../components/home/CVProgressSummary.jsx'; // Importar el nuevo componente
+import CVProgressSummary from '../components/home/CVProgressSummary.jsx';
 import CVGenerator from '../lib/cvGenerator';
 
 const formStepsConfig = [
@@ -61,7 +61,6 @@ const conversationalStepsConfig = [
 const HomePage = () => {
   const cvStoreData = useCVStore();
   
-  // Renderizar null o un spinner si cvStoreData aún no se ha hidratado
   if (!cvStoreData) {
     return <div>Cargando...</div>; 
   }
@@ -75,18 +74,6 @@ const HomePage = () => {
   useEffect(() => {
     console.log("HomePage - El componente se ha renderizado.");
   }, []);
-
-  // Comentado temporalmente para depuración de SSR
-  // useEffect(() => {
-  //   const currentStepId = steps[currentStepIndex]?.id;
-  //   if (currentStepId && currentStepId.startsWith('preview') && currentStepId !== 'preview') {
-  //     const timer = setTimeout(() => {
-  //       handleNext();
-  //     }, 15000); // Avanza después de 15 segundos
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [currentStepIndex, steps, handleNext]);
-
 
   const steps = mode === 'form' ? formStepsConfig : (mode === 'conversational' ? conversationalStepsConfig : []);
   
@@ -139,7 +126,6 @@ const HomePage = () => {
     toast({ title: "Preparando PDF...", description: "Esto puede tardar unos segundos." });
 
     try {
-        // Esperar un ciclo de evento para asegurar que el DOM esté completamente renderizado
         await new Promise(resolve => setTimeout(resolve, 50));
         await CVGenerator.downloadCVAsPDF(element, cvData.personalInfo.fullName || 'CV');
         toast({
@@ -160,7 +146,6 @@ const HomePage = () => {
     }
   };
 
-
   const progress = steps.length > 0 ? ((currentStepIndex + 1) / steps.length) * 100 : 0;
 
   if (!mode) {
@@ -177,9 +162,9 @@ const HomePage = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-6xl mx-auto p-2 sm:p-0 grid grid-cols-1 lg:grid-cols-3 gap-4" // Modificado para grid
+        className="w-full max-w-6xl mx-auto p-2 sm:p-0 grid grid-cols-1 lg:grid-cols-3 gap-4"
       >
-        <div className="lg:col-span-2"> {/* Contenedor para el formulario */}
+        <div className="lg:col-span-2">
           <Card className="shadow-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur-md border-slate-200 dark:border-slate-700/50 overflow-hidden">
             <CardHeader className="border-b border-slate-200 dark:border-slate-700/50 p-4 sm:p-5">
               <div className="flex items-center justify-between mb-2">
@@ -218,20 +203,17 @@ const HomePage = () => {
               onBack={handleBack}
               onNext={handleNext}
               onReset={handleReset}
-              // Deshabilitar el botón "Siguiente" en los pasos de vista previa intermedios para evitar doble avance
               disableNext={currentStepConfig?.id.startsWith('preview') && currentStepConfig?.id !== 'preview'}
             />
           </Card>
         </div>
-        {/* Columna para el resumen del CV */}
-        <div className="hidden lg:block"> {/* Ocultar en pantallas pequeñas */}
+        <div className="hidden lg:block">
           <CVProgressSummary
             cvData={cvData}
             currentStepIndex={currentStepIndex}
             stepsConfig={steps}
           />
         </div>
-        {/* Bloque de depuración visible */}
         <div className="lg:col-span-3 mt-4 p-4 bg-gray-100 dark:bg-slate-700 rounded-lg shadow-inner text-xs text-slate-700 dark:text-slate-200 overflow-auto max-h-60">
           <h3 className="font-bold mb-2">Estado Actual de cvData (Depuración):</h3>
           <pre className="whitespace-pre-wrap break-all">{JSON.stringify(cvData, null, 2)}</pre>
