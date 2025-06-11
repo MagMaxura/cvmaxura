@@ -31,21 +31,25 @@ import React from 'react';
             )}
           </div>
           <div className="col-span-1 text-center md:text-left">
-            <h1 className="text-2xl md:text-4xl font-bold text-teal-600 dark:text-teal-300 break-words">{personalInfo.fullName || "Nombre Completo"}</h1>
-            {personalInfo.professionalSummary && <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1 italic whitespace-pre-wrap">{personalInfo.professionalSummary}</p>}
+            <h1 className="text-xl md:text-3xl font-bold text-teal-600 dark:text-teal-300 break-words">{personalInfo.fullName || "Nombre Completo"}</h1>
+            {personalInfo.professionalSummary && <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 mt-1 italic whitespace-pre-wrap">{personalInfo.professionalSummary}</p>}
             
             <div className="mt-2 md:mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
-              <DetailItem icon={Mail} value={personalInfo.email} link={`mailto:${personalInfo.email}`} />
-              <DetailItem icon={Phone} value={personalInfo.phone} link={`tel:${personalInfo.phone}`} />
-              <DetailItem icon={MapPin} value={personalInfo.currentLocation || personalInfo.address} />
-              <DetailItem icon={Globe} value={personalInfo.nationality} />
-              <DetailItem icon={CalendarDays} value={personalInfo.age ? `${personalInfo.age} años` : ''} />
-              <DetailItem icon={Users} value={personalInfo.maritalStatus} />
-            </div>
-            <div className="mt-2 md:mt-3 flex justify-center md:justify-start flex-wrap gap-x-3 gap-y-1">
-              {personalInfo.linkedin && <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="text-sky-600 dark:text-sky-400 hover:underline text-xs md:text-sm flex items-center"><LinkIcon size={14} className="mr-1"/>LinkedIn</a>}
-              {personalInfo.otherSocialProfile && <a href={personalInfo.otherSocialProfile} target="_blank" rel="noopener noreferrer" className="text-cyan-600 dark:text-cyan-400 hover:underline text-xs md:text-sm flex items-center"><LinkIcon size={14} className="mr-1"/>Otro Perfil</a>}
-              {personalInfo.portfolio && <a href={personalInfo.portfolio} target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 hover:underline text-xs md:text-sm flex items-center"><LinkIcon size={14} className="mr-1"/>Portfolio</a>}
+              {/* Columna izquierda: Contacto con iconos */}
+              <div>
+                <DetailItem icon={Mail} value={personalInfo.email} link={`mailto:${personalInfo.email}`} />
+                <DetailItem icon={Phone} value={personalInfo.phone} link={`tel:${personalInfo.phone}`} />
+                <DetailItem icon={MapPin} value={personalInfo.currentLocation || personalInfo.address} />
+              </div>
+              {/* Columna derecha: Detalles personales sin iconos, y enlaces */}
+              <div>
+                {personalInfo.nationality && <DetailItem value={personalInfo.nationality} />}
+                {personalInfo.age && <DetailItem value={personalInfo.age ? `${personalInfo.age} años` : ''} />}
+                {personalInfo.maritalStatus && <DetailItem value={personalInfo.maritalStatus} />}
+                {personalInfo.linkedin && <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="text-sky-600 dark:text-sky-400 hover:underline text-xs md:text-sm flex items-center mt-0.5"><LinkIcon size={14} className="mr-1"/>LinkedIn</a>}
+                {personalInfo.otherSocialProfile && <a href={personalInfo.otherSocialProfile} target="_blank" rel="noopener noreferrer" className="text-cyan-600 dark:text-cyan-400 hover:underline text-xs md:text-sm flex items-center mt-0.5"><LinkIcon size={14} className="mr-1"/>Otro Perfil</a>}
+                {personalInfo.portfolio && <a href={personalInfo.portfolio} target="_blank" rel="noopener noreferrer" className="text-emerald-600 dark:text-emerald-400 hover:underline text-xs md:text-sm flex items-center mt-0.5"><LinkIcon size={14} className="mr-1"/>Portfolio</a>}
+              </div>
             </div>
           </div>
         </header>
