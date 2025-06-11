@@ -51,12 +51,12 @@ import React from 'react';
 
     export const getSectionDefinitions = (cvData = {}) => {
       const { 
-        experience = [], 
-        education = [], 
-        skills = [], 
-        projects = [], 
-        certifications = [], 
-        languages: formLanguages = [],
+        experience = [],
+        education = [],
+        skills: { technical: technicalSkills = [], soft: softSkills = [], languages: formLanguages = [] } = {}, // Desestructurar skills
+        projects = [],
+        certifications = [],
+        languages: otherLanguages = [], // Renombrar para evitar conflicto con languages de skills
         educationDetails = {}, 
         experienceDetails = {}, 
         skillsDetails = {}, 
@@ -87,7 +87,7 @@ import React from 'react';
         {
           title: "Habilidades",
           icon: Star,
-          formItems: skills,
+          formItems: [...technicalSkills, ...softSkills], // Combinar habilidades técnicas y blandas
           conversationalDetails: skillsDetails,
           renderFormItem: renderSkillItem,
           keyPrefix: "skill",
@@ -111,7 +111,7 @@ import React from 'react';
         {
           title: "Idiomas",
           icon: LanguagesIconUI,
-          formItems: formLanguages,
+          formItems: [...formLanguages, ...otherLanguages], // Combinar idiomas de habilidades y otros idiomas
           conversationalDetails: languageDetails,
           renderFormItem: renderLanguageItem,
           keyPrefix: "lang",

@@ -8,9 +8,9 @@ import React, { useState, useEffect } from 'react';
     import SkillCategory from '@/components/cv-form-steps/skills-step/SkillCategory';
 
     const SkillsStep = ({ cvData, updateCVData, onStepComplete }) => {
-      const [technicalSkills, setTechnicalSkills] = useState(cvData.skills?.technical || [{ id: Date.now(), name: '', level: 3 }]);
-      const [softSkills, setSoftSkills] = useState(cvData.skills?.soft || [{ id: Date.now() + 1, name: '', level: 3 }]);
-      const [languages, setLanguages] = useState(cvData.skills?.languages || [{ id: Date.now() + 2, name: '', level: 3 }]);
+      // Inicializar con al menos un campo vacío si no hay datos
+      const [technicalSkills, setTechnicalSkills] = useState(cvData.skills?.technical?.length > 0 ? cvData.skills.technical : [{ id: Date.now(), name: '', level: 3 }]);
+      const [softSkills, setSoftSkills] = useState(cvData.skills?.soft?.length > 0 ? cvData.skills.soft : [{ id: Date.now() + 1, name: '', level: 3 }]);
       
       const { toast } = useToast();
       const {
@@ -68,7 +68,7 @@ import React, { useState, useEffect } from 'react';
           return;
         }
 
-        const currentCategoryState = category === 'technical' ? technicalSkills : category === 'soft' ? softSkills : languages;
+        const currentCategoryState = category === 'technical' ? technicalSkills : softSkills;
         const currentlyActive = (isListening || isActivating) && activeMicCategory === category && activeMicDetails.index === index && activeMicDetails.field === fieldName;
 
         if (currentlyActive) {
@@ -88,8 +88,7 @@ import React, { useState, useEffect } from 'react';
           const newValue = originalValue ? `${originalValue} ${finalTranscript}`.trim() : finalTranscript;
           
           const updater = activeMicCategory === 'technical' ? makeUpdater(setTechnicalSkills, 'technical') :
-                          activeMicCategory === 'soft' ? makeUpdater(setSoftSkills, 'soft') :
-                          makeUpdater(setLanguages, 'languages');
+                          activeMicCategory === 'soft' ? makeUpdater(setSoftSkills, 'soft') : null;
           updater(index, field, newValue);
           
           clearFinalTranscript();
@@ -105,8 +104,7 @@ import React, { useState, useEffect } from 'react';
             const updatedDisplayValue = (originalValue ? originalValue + ' ' : '') + interimTranscript;
 
             const setter = activeMicCategory === 'technical' ? setTechnicalSkills :
-                           activeMicCategory === 'soft' ? setSoftSkills :
-                           setLanguages;
+                           activeMicCategory === 'soft' ? setSoftSkills : null;
             
             setter(prevSkills => prevSkills.map((skill, i) => 
               i === index ? { ...skill, [field]: updatedDisplayValue.trim() } : skill
@@ -144,12 +142,11 @@ import React, { useState, useEffect } from 'react';
 
         const hasTechnicalSkills = technicalSkills.some(skill => skill.name);
         const hasSoftSkills = softSkills.some(skill => skill.name);
-        const hasLanguages = languages.some(lang => lang.name);
 
-        if (!hasTechnicalSkills && !hasSoftSkills && !hasLanguages) {
+        if (!hasTechnicalSkills && !hasSoftSkills) {
           toast({
             title: "Campos obligatorios incompletos",
-            description: "Por favor, añade al menos una habilidad técnica, blanda o un idioma.",
+            description: "Por favor, añade al menos una habilidad técnica o blanda.",
             variant: "destructive",
           });
           return;
@@ -158,7 +155,6 @@ import React, { useState, useEffect } from 'react';
         updateCVData('skills', {
           technical: technicalSkills,
           soft: softSkills,
-          languages: languages,
         });
         if(onStepComplete) onStepComplete();
       };
@@ -197,16 +193,6 @@ import React, { useState, useEffect } from 'react';
             onChange={makeUpdater(setSoftSkills, 'soft')}
             onMicClick={(index, field) => handleMicClick('soft', index, field)}
             activeMic={getActiveMicStatus('soft', activeMicDetails.index, activeMicDetails.field)}
-          />
-          <SkillCategory 
-            title="Idiomas" 
-            icon={<MessageSquare className="h-5 w-5 mr-2 text-green-500" />}
-            skills={languages}
-            onAdd={makeAdder(setLanguages, 'languages')}
-            onRemove={makeRemover(setLanguages, 'languages')}
-            onChange={makeUpdater(setLanguages, 'languages')}
-            onMicClick={(index, field) => handleMicClick('languages', index, field)}
-            activeMic={getActiveMicStatus('languages', activeMicDetails.index, activeMicDetails.field)}
           />
 
           {(isListening || isActivating) && activeMicCategory && (

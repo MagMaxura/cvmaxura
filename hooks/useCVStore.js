@@ -31,13 +31,16 @@ import { useToast } from '@/components/ui/use-toast';
         favoriteJob: '',
         favoriteJobTasks: '',
       },
-      skills: [],
+      skills: { // Cambiar a un objeto para las subcategorías
+        technical: [],
+        soft: [],
+        languages: [], // Los idiomas del formulario de habilidades
+      },
       skillsDetails: {
         naturalTalents: '',
         toolsAndSkills: '',
         workStyle: '',
-      },
-      languages: [], 
+      languages: [], // Mantener este para el paso de idiomas si es diferente
       languageDetails: {
         languageProficiency: '',
       },
@@ -76,7 +79,20 @@ import { useToast } from '@/components/ui/use-toast';
               const mergedData = { ...initialCVDataGlobal };
               for (const key in initialCVDataGlobal) {
                 if (parsedItem[key] !== undefined) {
-                  if (Array.isArray(initialCVDataGlobal[key])) {
+                  if (key === 'skills') {
+                    // Manejar la migración de 'skills' de array a objeto
+                    if (Array.isArray(parsedItem[key])) {
+                      mergedData[key] = {
+                        technical: parsedItem[key], // Asumir que las habilidades antiguas eran técnicas
+                        soft: [],
+                        languages: [],
+                      };
+                    } else if (typeof parsedItem[key] === 'object' && parsedItem[key] !== null) {
+                      mergedData[key] = { ...initialCVDataGlobal[key], ...parsedItem[key] };
+                    } else {
+                      mergedData[key] = initialCVDataGlobal[key]; // Fallback si no es ni array ni objeto
+                    }
+                  } else if (Array.isArray(initialCVDataGlobal[key])) {
                     mergedData[key] = Array.isArray(parsedItem[key]) ? parsedItem[key] : initialCVDataGlobal[key];
                   } else if (typeof initialCVDataGlobal[key] === 'object' && initialCVDataGlobal[key] !== null) {
                     mergedData[key] = { ...initialCVDataGlobal[key], ...parsedItem[key] };

@@ -51,9 +51,11 @@ import React from 'react';
                 <span className="text-xs text-slate-500 dark:text-slate-400 w-10 text-center">
                   {skill.level}/5
                 </span>
-                <Button type="button" variant="ghost" size="icon" onClick={() => onRemove(index)} className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
-                  <X className="h-4 w-4" />
-                </Button>
+                {skills.length > 1 && (
+                  <Button type="button" variant="ghost" size="icon" onClick={() => onRemove(index)} className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
               </motion.div>
             ))}
           </AnimatePresence>

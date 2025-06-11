@@ -40,7 +40,8 @@ import React from 'react';
               <div className="space-y-1">
                 <DetailItem icon={Mail} value={personalInfo.email} link={`mailto:${personalInfo.email}`} />
                 <DetailItem icon={Phone} value={personalInfo.phone} link={`tel:${personalInfo.phone}`} />
-                <DetailItem icon={MapPin} value={personalInfo.currentLocation || personalInfo.address} />
+                {personalInfo.address && <DetailItem icon={MapPin} value={personalInfo.address} />}
+                {!personalInfo.address && personalInfo.currentLocation && <DetailItem icon={MapPin} value={personalInfo.currentLocation} />}
               </div>
               {/* Columna derecha: Detalles personales con iconos, y enlaces */}
               <div className="space-y-1">
