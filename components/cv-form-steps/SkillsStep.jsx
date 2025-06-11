@@ -121,12 +121,12 @@ import React, { useState, useEffect } from 'react';
             stopListening();
             if(activeMicCategory && activeMicDetails.index !== null && activeMicDetails.originalValue) {
                 const { index, field, originalValue } = activeMicDetails;
-                 const setter = activeMicCategory === 'technical' ? setTechnicalSkills :
-                           activeMicCategory === 'soft' ? setSoftSkills :
-                           setLanguages;
-                setter(prevSkills => prevSkills.map((skill, i) => 
-                  i === index ? { ...skill, [field]: originalValue } : skill
-                ));
+                 const setter = activeMicCategory === 'technical' ? setTechnicalSkills : setSoftSkills;
+               if (setter) { // Asegurarse de que el setter no sea nulo
+                   setter(prevSkills => prevSkills.map((skill, i) =>
+                     i === index ? { ...skill, [field]: originalValue } : skill
+                   ));
+               }
             }
           }
           setActiveMicCategory(null);
