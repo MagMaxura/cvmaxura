@@ -61,9 +61,10 @@ const conversationalStepsConfig = [
 
 const HomePage = () => {
   const cvStoreData = useCVStore();
+  const cvPreviewRef = useRef(null); // Declarar cvPreviewRef aquí
   
   if (!cvStoreData) {
-    return <div>Cargando...</div>; 
+    return <div>Cargando...</div>;
   }
 
   const { cvData, resetCVData, updateCVData, updateCVField, addListItem, updateListItem, removeListItem } = cvStoreData;
