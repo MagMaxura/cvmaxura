@@ -140,6 +140,8 @@ const HomePage = () => {
     toast({ title: "Preparando PDF...", description: "Esto puede tardar unos segundos." });
 
     try {
+        // Esperar un ciclo de evento para asegurar que el DOM esté completamente renderizado
+        await new Promise(resolve => setTimeout(resolve, 50));
         await CVGenerator.downloadCVAsPDF(cvPreviewRef.current, cvData.personalInfo.fullName || 'CV');
         toast({
             title: "¡PDF Descargado!",
