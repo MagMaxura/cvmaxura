@@ -195,7 +195,7 @@ const HomePage = () => {
                 updateListItem={updateListItem}
                 removeListItem={removeListItem}
                 onStepComplete={handleNext}
-                downloadPDF={currentStepConfig?.id === 'preview' ? () => downloadPDF() : undefined}
+                downloadPDF={currentStepConfig?.id === 'preview' ? () => downloadPDF(cvPreviewRef) : undefined}
                 isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
                 cvPreviewRef={cvPreviewRef} // Pasar la ref al StepRenderer
               />
