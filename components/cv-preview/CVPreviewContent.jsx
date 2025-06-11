@@ -9,6 +9,7 @@ const CVPreviewContent = forwardRef(({ cvData }, ref) => {
   const headerRef = useRef(null);
   const mainRef = useRef(null);
   const footerRef = useRef(null);
+  const contentToDownloadRef = useRef(null); // Nueva ref para el contenedor principal
 
   useImperativeHandle(ref, () => ({
     getHeaderElement: () => headerRef.current,
@@ -19,7 +20,8 @@ const CVPreviewContent = forwardRef(({ cvData }, ref) => {
         return Array.from(mainRef.current.querySelectorAll('.cv-section'));
       }
       return [];
-    }
+    },
+    getContentToDownloadElement: () => contentToDownloadRef.current // Exponer el elemento principal
   }));
 
   const {
@@ -45,7 +47,7 @@ const CVPreviewContent = forwardRef(({ cvData }, ref) => {
   return (
     <div id="cv-preview-scroll-container" className="flex-grow overflow-y-auto rounded-xl border border-gray-300 dark:border-slate-700 bg-gray-100/50 dark:bg-slate-800/40 p-1.5">
       <Card id="cv-preview-card" className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 p-4 md:p-6 shadow-xl w-full min-h-full print:p-0 print:shadow-none print:border-none">
-        <div id="cv-content-to-download" className="relative p-3 md:p-4 border border-gray-200 dark:border-slate-700 flex flex-col print:border-none print:p-0">
+        <div id="cv-content-to-download" ref={contentToDownloadRef} className="relative p-3 md:p-4 border border-gray-200 dark:border-slate-700 flex flex-col print:border-none print:p-0">
           <CVHeader personalInfo={personalInfo} ref={headerRef} />
           <main ref={mainRef} className="flex-grow space-y-3 md:space-y-4 print:space-y-2">
             <CVSectionRenderer sections={sections} />
