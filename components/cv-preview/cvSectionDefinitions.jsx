@@ -21,8 +21,33 @@ import React from 'react';
 
     const renderSkillItem = (skill) => (
       <li className="text-sm md:text-base text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-md">
-        {skill.name || "Habilidad"} <span className="text-xs text-slate-500 dark:text-slate-400">({skill.level || "Nivel"})</span>
+        {skill.name || "Habilidad"} <span className="text-xs text-slate-500 dark:text-slate-400">({skill.level}/5)</span>
       </li>
+    );
+
+    const renderSkillsColumns = ({ technicalSkills, softSkills }) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-2">Habilidades Técnicas</h4>
+          <ul className="flex flex-wrap gap-2">
+            {technicalSkills.map((skill, index) => (
+              <li key={index} className="text-sm md:text-base text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-md">
+                {skill.name || "Habilidad"} <span className="text-xs text-slate-500 dark:text-slate-400">({skill.level}/5)</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-slate-700 dark:text-slate-200 mb-2">Habilidades Blandas</h4>
+          <ul className="flex flex-wrap gap-2">
+            {softSkills.map((skill, index) => (
+              <li key={index} className="text-sm md:text-base text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700/60 px-2 py-1 rounded-md">
+                {skill.name || "Habilidad"} <span className="text-xs text-slate-500 dark:text-slate-400">({skill.level}/5)</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     );
 
     const renderProjectItem = (proj) => (
@@ -87,11 +112,11 @@ import React from 'react';
         {
           title: "Habilidades",
           icon: Star,
-          formItems: [...technicalSkills, ...softSkills], // Combinar habilidades técnicas y blandas
+          formItems: [{ technicalSkills, softSkills }], // Pasar un objeto con ambas listas
           conversationalDetails: skillsDetails,
-          renderFormItem: renderSkillItem,
+          renderFormItem: renderSkillsColumns, // Usar la nueva función
           keyPrefix: "skill",
-          isListContainer: true,
+          isListContainer: false, // Ya no es un contenedor de lista simple
           showConversationalDataWhenFormIsEmpty: true,
         },
         {
