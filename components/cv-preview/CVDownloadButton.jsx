@@ -2,10 +2,8 @@ import React from 'react';
     import { Button } from '@/components/ui/button';
     import { Download, Loader2 } from 'lucide-react';
 
-    const CVDownloadButton = ({ downloadPDF, cvPreviewRef, isDownloading }) => {
-      console.log("CVDownloadButton - cvPreviewRef:", cvPreviewRef);
-      console.log("CVDownloadButton - cvPreviewRef.current:", cvPreviewRef?.current);
-      const isButtonDisabled = !cvPreviewRef || !cvPreviewRef.current || isDownloading;
+    const CVDownloadButton = ({ downloadPDF, isDownloading }) => {
+      const isButtonDisabled = isDownloading; // El elemento se pasa directamente a onDownload
 
       return (
         <Button 
