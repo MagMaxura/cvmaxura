@@ -115,10 +115,12 @@ const HomePage = () => {
     });
   };
 
-  const downloadPDF = async (element) => {
+  const downloadPDF = async () => {
+    const element = document.getElementById('cv-content-to-download');
+    console.log("downloadPDF - Elemento obtenido por ID:", element);
     if (isDownloading || !element) {
       if (!element) {
-        toast({ title: "Error", description: "Vista previa no disponible.", variant: "destructive"});
+        toast({ title: "Error", description: "Vista previa no disponible. Asegúrate de que el contenido del CV esté visible.", variant: "destructive"});
       }
       return;
     }
@@ -126,7 +128,7 @@ const HomePage = () => {
     toast({ title: "Preparando PDF...", description: "Esto puede tardar unos segundos." });
 
     try {
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await new Promise(resolve => setTimeout(resolve, 50)); // Pequeño retraso para asegurar que el DOM esté listo
         await CVGenerator.downloadCVAsPDF(element, cvData.personalInfo.fullName || 'CV');
         toast({
             title: "¡PDF Descargado!",
@@ -192,7 +194,7 @@ const HomePage = () => {
                 updateListItem={updateListItem}
                 removeListItem={removeListItem}
                 onStepComplete={handleNext}
-                downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
+                downloadPDF={currentStepConfig?.id === 'preview' ? () => downloadPDF() : undefined}
                 isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
               />
             </CardContent>
