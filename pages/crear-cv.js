@@ -70,7 +70,6 @@ const HomePage = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [mode, setMode] = useState(null);
   const { toast } = useToast();
-  const cvPreviewRef = useRef(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
@@ -129,9 +128,9 @@ const HomePage = () => {
     });
   };
 
-  const downloadPDF = async () => {
-    if (isDownloading || !cvPreviewRef.current) {
-      if (!cvPreviewRef.current) {
+  const downloadPDF = async (element) => {
+    if (isDownloading || !element) {
+      if (!element) {
         toast({ title: "Error", description: "Vista previa no disponible.", variant: "destructive"});
       }
       return;
@@ -142,7 +141,7 @@ const HomePage = () => {
     try {
         // Esperar un ciclo de evento para asegurar que el DOM esté completamente renderizado
         await new Promise(resolve => setTimeout(resolve, 50));
-        await CVGenerator.downloadCVAsPDF(cvPreviewRef.current, cvData.personalInfo.fullName || 'CV');
+        await CVGenerator.downloadCVAsPDF(element, cvData.personalInfo.fullName || 'CV');
         toast({
             title: "¡PDF Descargado!",
             description: "Tu CV ha sido guardado.",
@@ -208,7 +207,6 @@ const HomePage = () => {
                 updateListItem={updateListItem}
                 removeListItem={removeListItem}
                 onStepComplete={handleNext}
-                cvPreviewRef={currentStepConfig?.id === 'preview' ? cvPreviewRef : undefined}
                 downloadPDF={currentStepConfig?.id === 'preview' ? downloadPDF : undefined}
                 isDownloading={currentStepConfig?.id === 'preview' ? isDownloading : undefined}
               />

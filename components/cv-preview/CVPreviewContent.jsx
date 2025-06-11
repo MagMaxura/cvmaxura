@@ -5,9 +5,8 @@ import React from 'react';
     import CVSectionRenderer from '@/components/cv-preview/CVSectionRenderer';
     import { getSectionDefinitions } from '@/components/cv-preview/cvSectionDefinitions';
 
-    const CVPreviewContent = ({ cvData, cvPreviewRef }) => {
+    const CVPreviewContent = ({ cvData }) => {
       console.log("CVPreviewContent - cvData recibido:", cvData);
-      console.log("CVPreviewContent - cvPreviewRef.current:", cvPreviewRef?.current);
       const {
         personalInfo = {},
         educationDetails = {},
