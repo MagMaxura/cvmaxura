@@ -18,8 +18,8 @@ import React from 'react';
 
     const CVHeader = ({ personalInfo }) => {
       return (
-        <header className="flex flex-col md:flex-row items-center md:items-start mb-4 md:mb-6">
-          <div className="flex-shrink-0 mr-0 md:mr-6 mb-3 md:mb-0">
+        <header className="grid grid-cols-[auto_1fr] gap-x-6 items-start mb-4 md:mb-6">
+          <div className="col-span-1 flex-shrink-0 mb-3 md:mb-0">
             {personalInfo.profilePicture ? (
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-teal-500 dark:border-teal-400 shadow-lg">
                 <img src={personalInfo.profilePicture} alt="Foto de perfil" className="w-full h-full object-cover" />
@@ -30,7 +30,7 @@ import React from 'react';
               </div>
             )}
           </div>
-          <div className="flex-grow text-center md:text-left">
+          <div className="col-span-1 text-center md:text-left">
             <h1 className="text-2xl md:text-4xl font-bold text-teal-600 dark:text-teal-300 break-words">{personalInfo.fullName || "Nombre Completo"}</h1>
             {personalInfo.professionalSummary && <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1 italic whitespace-pre-wrap">{personalInfo.professionalSummary}</p>}
             
