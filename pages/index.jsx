@@ -82,7 +82,7 @@ import React from 'react';
                 </Link>
               </Button>
             </MotionDiv>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">¡Descarga gratis o apoya con $1 USD!</p>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-4">¡Descarga gratis o sin publicidad por $1 USD!</p>
           </MotionDiv>
           {/* Resto de las secciones de la LandingPage */}
           <section className="py-16 sm:py-20 bg-slate-50 dark:bg-slate-900/50 rounded-t-3xl">
@@ -126,8 +126,8 @@ import React from 'react';
                <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                 <FeatureCard
                   icon={DollarSign}
-                  title="Apoyo Voluntario ($1 USD)"
-                  description="Si la herramienta te es útil, considera un pago único de $1 USD al descargar. ¡Nos ayudas a seguir mejorando!"
+                  title="Descarga sin publicidad ($1 USD)"
+                  description="Obtén tu CV sin anuncios por un pago único de $1 USD. ¡Tu apoyo nos ayuda a mantener y mejorar la plataforma!"
                   delay={0.1}
                 />
                 <FeatureCard

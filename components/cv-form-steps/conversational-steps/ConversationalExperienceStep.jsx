@@ -9,10 +9,10 @@ import React, { useState, useEffect } from 'react';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
     const questions = [
-      { id: 'currentEmployment', label: '¿Estás laburando ahora? ¿En qué andás?', type: 'textarea' },
-      { id: 'pastExperiences', label: '¿Y antes? ¿Por dónde estuviste trabajando? ¿Te gustaba? Cuentame que te escucho atentamente todo lo que hiciste y el tiempo que estuviste en cada lado.', type: 'textarea' },
-      { id: 'favoriteJob', label: '¿Cuál fue el laburo que más te gustó y por qué?', type: 'textarea' },
-      { id: 'favoriteJobTasks', label: '¿Qué hacías exactamente ahí? ¿Qué tareas eran tuyas?', type: 'textarea' },
+      { id: 'currentEmployment', label: '¿Se encuentra trabajando actualmente? ¿Cuál es su ocupación actual?', type: 'textarea' },
+      { id: 'pastExperiences', label: '¿Podría describir sus experiencias laborales anteriores? Por favor, detalle sus responsabilidades y el tiempo que dedicó a cada una.', type: 'textarea' },
+      { id: 'favoriteJob', label: '¿Cuál ha sido el trabajo que más ha disfrutado y por qué?', type: 'textarea' },
+      { id: 'favoriteJobTasks', label: '¿Cuáles eran sus responsabilidades y tareas específicas en ese puesto?', type: 'textarea' },
     ];
 
     const ConversationalExperienceStep = ({ cvData, handleChange, onStepComplete }) => {

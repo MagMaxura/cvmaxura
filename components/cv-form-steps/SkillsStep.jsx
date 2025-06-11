@@ -184,8 +184,11 @@ import React, { useState, useEffect } from 'react';
             onMicClick={(index, field) => handleMicClick('technical', index, field)}
             activeMic={getActiveMicStatus('technical', activeMicDetails.index, activeMicDetails.field)}
           />
-          <SkillCategory 
-            title="Habilidades Blandas" 
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Ej: Soldar, Programación (JavaScript, Python), Redes Sociales, Diseño Gráfico, Edición de Video, etc.
+          </p>
+          <SkillCategory
+            title="Habilidades Blandas"
             icon={<UserCircle2 className="h-5 w-5 mr-2 text-sky-500" />}
             skills={softSkills}
             onAdd={makeAdder(setSoftSkills, 'soft')}
@@ -194,6 +197,9 @@ import React, { useState, useEffect } from 'react';
             onMicClick={(index, field) => handleMicClick('soft', index, field)}
             activeMic={getActiveMicStatus('soft', activeMicDetails.index, activeMicDetails.field)}
           />
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Ej: Comunicación, Trabajo en Equipo, Liderazgo, Resolución de Problemas, Adaptabilidad, Creatividad.
+          </p>
 
           {(isListening || isActivating) && activeMicCategory && (
             <div className="mt-4">

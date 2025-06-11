@@ -9,10 +9,10 @@ import React, { useState, useEffect } from 'react';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
     const questions = [
-      { id: 'studyLocationAndStatus', label: '¿Dónde estudiaste? ¿Terminaste algún título o estás en curso?', type: 'textarea' },
-      { id: 'studyEnjoyment', label: '¿Te gustaba lo que estudiaste o lo hiciste más por obligación?', type: 'textarea' },
-      { id: 'futureStudies', label: '¿Tenés pensado seguir alguna carrera o curso nuevo?', type: 'textarea' },
-      { id: 'additionalEducationInfo', label: '¿Quieres contar algo más sobre tu formación académica?', type: 'textarea' },
+      { id: 'studyLocationAndStatus', label: '¿Dónde realizó sus estudios? ¿Ha completado algún título o se encuentra actualmente cursando?', type: 'textarea' },
+      { id: 'studyEnjoyment', label: '¿Disfrutó de sus estudios o los realizó por obligación?', type: 'textarea' },
+      { id: 'futureStudies', label: '¿Tiene planes de continuar con alguna carrera o curso nuevo?', type: 'textarea' },
+      { id: 'additionalEducationInfo', label: '¿Desea añadir alguna información adicional sobre su formación académica?', type: 'textarea' },
     ];
 
     const ConversationalEducationStep = ({ cvData, handleChange, onStepComplete }) => {

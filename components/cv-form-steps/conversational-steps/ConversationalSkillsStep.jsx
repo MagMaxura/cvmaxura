@@ -10,9 +10,9 @@ import React, { useState, useEffect } from 'react';
     import AudioVisualizer from '@/components/ui/AudioVisualizer';
 
     const questions = [
-      { id: 'naturalTalents', label: '¿Qué cosas te salen bien sin que te cueste mucho?', type: 'textarea' },
-      { id: 'toolsAndSkills', label: '¿Tenés alguna habilidad o herramienta que usás seguido, tipo Excel, diseño, redes, idiomas, etc.?', type: 'textarea' },
-      { id: 'workStyle', label: '¿Sos más de trabajar solo o en equipo?', type: 'text' },
+      { id: 'naturalTalents', label: '¿Cuáles son sus talentos naturales o habilidades que domina con facilidad?', type: 'textarea' },
+      { id: 'toolsAndSkills', label: '¿Posee alguna habilidad o herramienta específica que utilice con frecuencia, como Excel, diseño, gestión de redes, idiomas, etc.?', type: 'textarea' },
+      { id: 'workStyle', label: '¿Prefiere trabajar de forma individual o en equipo?', type: 'text' },
     ];
 
     const ConversationalSkillsStep = ({ cvData, handleChange, onStepComplete }) => {
